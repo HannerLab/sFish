@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<mvvm:ViewBase xmlns="http://xamarin.com/schemas/2014/forms" 
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:mvvm="clr-namespace:TinyMvvm.Forms;assembly=TinyMvvm.Forms"
+               xmlns:settingsViewModels="clr-namespace:HannerLabApp.ViewModels.SettingsViewModels;assembly=HannerLabApp"
+               xmlns:converters="clr-namespace:HannerLabApp.Converters;assembly=HannerLabApp"
+               x:DataType="settingsViewModels:SettingsPageViewModel"
+               x:Class="HannerLabApp.Views.SettingsViews.SettingsPageView"
+               x:TypeArguments="settingsViewModels:SettingsPageViewModel"
+               Title="Settings">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+      <StackLayout>
+
+            <StackLayout>
+                <TableView Intent="Settings" HasUnevenRows="True" BackgroundColor="{StaticResource White}">
+                    <TableRoot>
+                        <TableSection Title="General">
+                            <SwitchCell Text="Save copies of captured photos to gallery" On="{Binding IsSavePhotosToGalleryEnabled}"/>
+                            <SwitchCell Text="Default to advanced mode" On="{Binding IsAdvanceModeDefaultEnabled}"/>
+                        </TableSection>
+                        <TableSection Title="Cloud Data Syncing">
+                            <ViewCell Height="50">
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                    <Label Text="{Binding Path=AccountEmail}" />
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding AuthenticateCommand}" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                            </ViewCell>
+                            <ViewCell>
+                                <StackLayout Padding="25" Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                                    <StackLayout Orientation="Vertical">
+                                        <Button Text="Sync to Cloud Storage"
+                                                IsVisible="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}"
+                                                WidthRequest="250"
+                                            HorizontalOptions="CenterAndExpand"
+                                            IsEnabled="{Binding IsAuthenticated}"
+                                            Command="{Binding SyncCommand}"/>
+                                        <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
+                                        <Label Text="{Binding SyncMessage}"
+                                           HorizontalOptions="CenterAndExpand"
+                                           WidthRequest="250"
+                                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell>
+                        </TableSection>
+                        <TableSection Title="Other">
+                            <TextCell Text="About" Command="{Binding AboutCommand}"/>
+                            <TextCell Text="Help &amp; Feedback" Command="{Binding HelpFeedbackCommand}"/>
+                            <TextCell Text="License" Command="{Binding LicenseCommand}"/>
+                        </TableSection>
+                    </TableRoot>
+                </TableView>
+            </StackLayout>
+      </StackLayout>
+  </ContentPage.Content>
+
+</mvvm:ViewBase>

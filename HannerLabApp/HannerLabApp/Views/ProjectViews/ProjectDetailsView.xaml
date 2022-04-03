@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views:DetailsViewBase
+    x:TypeArguments="models:Project" 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:HannerLabApp.Converters;assembly=HannerLabApp"
+    xmlns:behaviours="clr-namespace:HannerLabApp.Behaviours;assembly=HannerLabApp"
+    xmlns:views="clr-namespace:HannerLabApp.Views;assembly=HannerLabApp"
+    xmlns:models="clr-namespace:HannerLabApp.Models;assembly=HannerLabApp"
+    xmlns:controls="clr-namespace:HannerLabApp.Controls;assembly=HannerLabApp"
+    x:Class="HannerLabApp.Views.ProjectViews.ProjectDetailsView"
+    Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+            <converters:BoolDecisionToStringConverter x:Key="BoolDecisionToStringConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!-- Tool bar with advanced toggle -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Text="{Binding Path=ViewModel.IsAdvancedShown, Converter={StaticResource BoolDecisionToStringConverter}, ConverterParameter='Advanced;Basic'}"
+            Command="{Binding ToggleModeCommand}"
+            Order="Primary"
+            Priority="0" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid Padding="30">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Project User Id -->
+                <StackLayout Grid.Row="0" IsVisible="{Binding ViewModel.IsAdvancedShown}">
+                    <Label Text="{Binding ViewModel.UserSpecifiedId.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.UserSpecifiedId.Value}" 
+                           Placeholder="{Binding ViewModel.UserSpecifiedId.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.UserSpecifiedId.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.UserSpecifiedId.Description}" 
+                           IsVisible="{Binding ViewModel.UserSpecifiedId.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.UserSpecifiedId.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                            IsVisible="{Binding ViewModel.UserSpecifiedId.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                             Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Project User Id -->
+
+                <!-- Project Date -->
+                <StackLayout Grid.Row="1" IsVisible="{Binding ViewModel.IsAdvancedShown}">
+                    <Label Text="{Binding ViewModel.Timestamp.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <controls:DateTimePicker DateTime="{Binding ViewModel.Timestamp.Value}" StringFormat="dd-MM-yyyy HH:mm" />
+
+                    <Label Text="{Binding ViewModel.Timestamp.Description}"
+                           IsVisible="{Binding ViewModel.Timestamp.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Timestamp.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Timestamp.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Project Date -->
+
+                <!-- Project Name -->
+                <StackLayout Grid.Row="2">
+                    <Label Text="{Binding ViewModel.Name.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.Name.Value}" 
+                           Placeholder="{Binding ViewModel.Name.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.Name.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.Name.Description}" 
+                           IsVisible="{Binding ViewModel.Name.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Name.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Name.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Project Name -->
+
+                <!-- Project Description -->
+                <StackLayout Grid.Row="3">
+                    <Label Text="{Binding ViewModel.Description.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.Description.Value}" 
+                           Placeholder="{Binding ViewModel.Description.Title}">
+                    <Entry.Behaviors>
+                        <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.Description.IsValid}"/>
+                    </Entry.Behaviors>
+                </Entry>
+
+                <Label Text="{Binding ViewModel.Description.Description}" 
+                       IsVisible="{Binding ViewModel.Description.IsValid}"
+                       Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                <Label Text="{Binding ViewModel.Description.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                       IsVisible="{Binding ViewModel.Description.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                       Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Project Description -->
+
+                <!-- Project Owner -->
+                <StackLayout Grid.Row="4">
+                    <Label Text="{Binding ViewModel.Owner.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.Owner.Value}" 
+                           Placeholder="{Binding ViewModel.Owner.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.Owner.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.Owner.Description}"
+                           IsVisible="{Binding ViewModel.Owner.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Owner.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Owner.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Project Owner -->
+
+                <!-- Project Contact Email -->
+                <StackLayout Grid.Row="5">
+                    <Label Text="{Binding ViewModel.ContactEmail.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.ContactEmail.Value}" 
+                           Placeholder="{Binding ViewModel.ContactEmail.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.ContactEmail.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.ContactEmail.Description}"
+                           IsVisible="{Binding ViewModel.ContactEmail.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.ContactEmail.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.ContactEmail.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Project Contact Email -->
+
+                <!-- Project Institution -->
+                <StackLayout Grid.Row="6">
+                    <Label Text="{Binding ViewModel.Institution.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.Institution.Value}" 
+                           Placeholder="{Binding ViewModel.Institution.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.Institution.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.Institution.Description}"
+                           IsVisible="{Binding ViewModel.Institution.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Institution.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Institution.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Project Institution -->
+
+                <!-- Project Recorders -->
+                <StackLayout Grid.Row="7">
+                    <Label Text="{Binding ViewModel.RecordedBy.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.RecordedBy.Value}" 
+                           Placeholder="{Binding ViewModel.RecordedBy.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.RecordedBy.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.RecordedBy.Description}"
+                           IsVisible="{Binding ViewModel.RecordedBy.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.RecordedBy.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.RecordedBy.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Project Recorders -->
+
+                <!-- Project Notes -->
+                <StackLayout Grid.Row="8">
+                    <Label Text="{Binding ViewModel.Notes.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.Notes.Value}" 
+                           Placeholder="{Binding ViewModel.Notes.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.Notes.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.Notes.Description}"
+                           IsVisible="{Binding ViewModel.Notes.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Notes.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Notes.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Project Notes -->
+
+                <!-- Save/delete/ button -->
+                <StackLayout 
+                    Grid.Row="9"
+                    IsVisible="True"
+                             Orientation="Horizontal"
+                             HorizontalOptions="Center">
+                <Button Text="Save"
+                        IsVisible="True"
+                        HorizontalOptions="Center"
+                        WidthRequest="275"
+                        Command="{Binding SaveCommand}"/>
+                <Button Text="Delete"
+                        IsVisible="{Binding IsEdit}"
+                        HorizontalOptions="Center"
+                        WidthRequest="275"
+                        Command="{Binding DeleteCommand}"/>
+                </StackLayout>
+
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+
+</views:DetailsViewBase>

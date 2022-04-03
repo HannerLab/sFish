@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<mvvm:ViewBase xmlns="http://xamarin.com/schemas/2014/forms" 
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:mvvm="clr-namespace:TinyMvvm.Forms;assembly=TinyMvvm.Forms"
+               xmlns:activityViewModels="clr-namespace:HannerLabApp.ViewModels.ActivityViewModels;assembly=HannerLabApp"
+               xmlns:converters="clr-namespace:HannerLabApp.Converters;assembly=HannerLabApp"
+               xmlns:behaviours="clr-namespace:HannerLabApp.Behaviours;assembly=HannerLabApp"
+               x:DataType="activityViewModels:ActivityExportPageViewModel"
+               x:Class="HannerLabApp.Views.ActivityViews.ActivityExportPageView"
+               x:TypeArguments="activityViewModels:ActivityExportPageViewModel"
+               Title="Export Activity">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+      <StackLayout>
+
+            <StackLayout>
+                <TableView Intent="Settings" HasUnevenRows="True" BackgroundColor="{StaticResource White}">
+                    <TableRoot>
+                        <TableSection Title="Exporting">
+                            <SwitchCell Text="Include attachments" On="{Binding IsIncludeAttachmentsSelected}"/>
+                            <SwitchCell Text="Use MDMAPR format" On="{Binding IsUseMdmaprFormatSelected}"/>
+                            <SwitchCell Text="Use soft export (will not tag samples as exported)" On="{Binding IsSoftExportSelected}"/>
+                            <ViewCell>
+                                <StackLayout Padding="25" Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                                    <StackLayout Orientation="Vertical">
+                                        <Button IsVisible="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}" 
+                                            Text="Export to file"
+                                                WidthRequest="250"
+                                                HorizontalOptions="CenterAndExpand"
+                                                Command="{Binding ExportToFileCommand}"/>
+                                        <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
+                                        <Label Text="Export a copy of all the current projects data to an Excel Workbook. For more advanced queries of data utilize the raw application data. For more information see the help page."
+                                               HorizontalOptions="CenterAndExpand"
+                                               WidthRequest="250"
+                                               Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell>
+                            <TextCell Text="Previous Activities" Command="{Binding ActivityHistoryCommand}"/>
+                        </TableSection>
+                    </TableRoot>
+                </TableView>
+            </StackLayout>
+      </StackLayout>
+  </ContentPage.Content>
+
+</mvvm:ViewBase>

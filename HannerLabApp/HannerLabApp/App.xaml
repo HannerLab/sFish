@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HannerLabApp.App">
+    <!--
+        Define global resources and styles here, that apply to all pages in your app.
+    -->
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <Color x:Key="Primary">#175cdc</Color>
+            <Color x:Key="LightGray">#efeff3</Color>
+            <Color x:Key="DarkGray">#757575</Color>
+            <Color x:Key="ExtraMediumGray">#d0d0d0</Color>
+            <Color x:Key="MediumGray">#eeeeee</Color>
+            <Color x:Key="White">White</Color>
+            <Color x:Key="Black">Black</Color>
+
+            <Color x:Key="Green">#0eab63</Color>
+            <Color x:Key="Red">#dc4a39</Color>
+
+            <Color x:Key="Orange">#faaf3a</Color>
+
+            <!-- The main title of the list object view -->
+            <Style TargetType="Label" x:Key="ListItemTitleTextStyle">
+                <Setter Property="FontSize" Value = "16" />
+                <Setter Property="FontAttributes" Value = "Bold"   />
+            </Style>
+
+            <!-- The main title of the list object view -->
+            <Style TargetType="Label" x:Key="ListItemDescriptionTextStyle">
+                <Setter Property="FontSize" Value = "14" />
+            </Style>
+
+            <!-- The main title of the list object view -->
+            <Style TargetType="Label" x:Key="ListItemIdTextStyle">
+                <Setter Property="FontAttributes" Value = "Italic"   />
+                <Setter Property="FontSize" Value = "14" />
+            </Style>
+
+            <!-- Error message that displays underneath a validable entry-->
+            <Style TargetType="Label" x:Key="ValidatableErrorTextStyle">
+                <Setter Property="TextColor" Value = "{StaticResource Red}"   />
+                <Setter Property="FontSize" Value = "14"   />
+                <Setter Property="Margin" Value = "5,0,5,25"   />
+            </Style>
+
+            <!-- General description of the entry -->
+            <Style TargetType="Label" x:Key="ValidatableDescriptionTextStyle">
+                <Setter Property="TextColor" Value = "{StaticResource DarkGray}"   />
+                <Setter Property="FontSize" Value = "14"   />
+                <Setter Property="Margin" Value = "5,0,5,25"   />
+            </Style>
+
+            <!-- The title of a text entry -->
+            <Style TargetType="Label" x:Key="ValidatableTitleTextStyle">
+                <Setter Property="TextColor" Value = "{StaticResource Primary}"   />
+                <Setter Property="FontSize" Value = "14"   />
+            </Style>
+
+            <!-- Style of the actual entry widget -->
+            <Style TargetType="Entry">
+                <Setter Property="Margin" Value = "0,0,0,0"   />
+                <Setter Property="FontSize" Value = "16" />
+                <Setter Property="PlaceholderColor" Value = "{StaticResource ExtraMediumGray}" />
+            </Style>
+
+            <Style TargetType="Label" x:Key="TitleStyle">
+                <Setter Property="TextColor" Value = "{StaticResource Primary}"   />
+                <Setter Property="HorizontalOptions" Value = "Center"   />
+                <Setter Property="FontSize" Value = "Title"   />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value = "{StaticResource MediumGray}"   />
+                <Setter Property="BorderColor" Value="{StaticResource DarkGray}" />
+                <Setter Property="TextColor" Value = "{StaticResource Black}"   />
+            </Style>
+
+            <Style TargetType="CheckBox">
+                <Setter Property="Color" Value = "{StaticResource Primary}"   />
+            </Style>
+
+            <Style TargetType="Button" x:Key="FontIconButtonStyle">
+                <Setter Property="BackgroundColor" Value = "Transparent"/>
+                <Setter Property="TextColor" Value = "{StaticResource Primary}"   />
+                <Setter Property="Padding" Value="0" />
+            </Style>
+
+        </ResourceDictionary>        
+    </Application.Resources>
+
+</Application>

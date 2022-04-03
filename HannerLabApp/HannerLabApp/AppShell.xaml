@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:views="clr-namespace:HannerLabApp.Views"
+        xmlns:controls="clr-namespace:HannerLabApp.Controls;assembly=HannerLabApp"
+        xmlns:projectViews="clr-namespace:HannerLabApp.Views.ProjectViews;assembly=HannerLabApp"
+        xmlns:stationViews="clr-namespace:HannerLabApp.Views.StationViews;assembly=HannerLabApp"
+        xmlns:siteViews="clr-namespace:HannerLabApp.Views.SiteViews;assembly=HannerLabApp"
+        xmlns:fa="clr-namespace:HannerLabApp.Helpers;assembly=HannerLabApp"
+        xmlns:ednaViews="clr-namespace:HannerLabApp.Views.EdnaViews;assembly=HannerLabApp"
+        xmlns:readingViews="clr-namespace:HannerLabApp.Views.ReadingViews;assembly=HannerLabApp"
+        xmlns:observationViews="clr-namespace:HannerLabApp.Views.ObservationViews;assembly=HannerLabApp"
+        xmlns:photoViews="clr-namespace:HannerLabApp.Views.PhotoViews;assembly=HannerLabApp"
+        xmlns:equipmentViews="clr-namespace:HannerLabApp.Views.EquipmentViews;assembly=HannerLabApp"
+        xmlns:activityViews="clr-namespace:HannerLabApp.Views.ActivityViews;assembly=HannerLabApp"
+        xmlns:settingsViews="clr-namespace:HannerLabApp.Views.SettingsViews;assembly=HannerLabApp"
+        Title="HannerLabApp"
+        x:Class="HannerLabApp.AppShell">
+
+    <!--
+        Custom flyout item with font icon
+    -->
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="White" />
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource DarkGray}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource MediumGray}" />
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Black}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.8*" />
+                </Grid.ColumnDefinitions>
+                    <Label x:Name="FlyoutItemIcon"
+                                        FontFamily="{Binding IconFontFamily}"       
+                                        Text="{Binding IconGlyph}"
+                                        TextColor="{Binding Source={x:Reference FlyoutItemLabel} ,Path=TextColor}"
+                                        FontSize="30"
+                                        Margin="5"/>
+                    <Label x:Name="FlyoutItemLabel"
+                                        Grid.Column="1"        
+                                        Text="{Binding Title}"
+                                        VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+    <!--
+        The overall app visual hierarchy is defined here, along with navigation.
+    
+        https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/
+    -->
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.ForegroundColor" Value="{StaticResource White}" />
+                <Setter Property="Shell.TitleColor" Value="{StaticResource White}" />
+                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+                <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource White}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Red}"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource DarkGray}"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource Primary}"/>
+            </Style>
+
+            <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+            <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
+            <Style TargetType="controls:FlyoutItemIconFont" BasedOn="{StaticResource BaseStyle}"/>
+
+            <!--
+            Default Styles for all Flyout Items
+            https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyoutitem-and-menuitem-style-classes
+            -->
+
+            <!--
+            Custom Style you can apply to any Flyout Item
+            -->
+        </ResourceDictionary>
+    </Shell.Resources>
+
+
+        <!-- 
+        Display project information in the flyout menu.
+        -->
+        <Shell.FlyoutHeader>
+        <StackLayout BackgroundColor="{DynamicResource Primary}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <StackLayout.Margin>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="iOS" Value="0,-1,0,0" />
+                </OnPlatform>
+            </StackLayout.Margin>
+            <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="iOS" Value="0,20,0,0" />
+                </OnPlatform>
+            </StackLayout.Padding>
+            <StackLayout.HeightRequest>
+                <OnPlatform x:TypeArguments="x:Double">
+                    <On Platform="iOS" Value="150" />
+                    <On Platform="Android" Value="150" />
+                </OnPlatform>
+            </StackLayout.HeightRequest>
+            <views:MenuHeaderView BackgroundColor="{StaticResource Primary}"/>
+            </StackLayout>
+        </Shell.FlyoutHeader>
+
+    <!-- Project -->
+    <controls:FlyoutItemIconFont Title="Projects" IconGlyph="{x:Static fa:FontAwesomeIcons.FolderOpen}" IconFontFamily="FAS">
+            <ShellContent Title="Info" Route="ProjectPageView" ContentTemplate="{DataTemplate projectViews:ProjectPageView}">
+                <ShellContent.Icon>
+                    <FontImageSource FontFamily="FAS" Glyph="{x:Static fa:FontAwesomeIcons.Info}" />
+                </ShellContent.Icon>
+            </ShellContent>
+            <ShellContent Title="Projects" Route="ProjectListView" ContentTemplate="{DataTemplate projectViews:ProjectListView}">
+                <ShellContent.Icon>
+                    <FontImageSource FontFamily="FAS" Glyph="{x:Static fa:FontAwesomeIcons.FolderOpen}" />
+                </ShellContent.Icon>
+            </ShellContent>
+        </controls:FlyoutItemIconFont>
+
+    <!-- Sites + Stations -->
+    <controls:FlyoutItemIconFont Title="Sites &amp; Stations" IconGlyph="{x:Static fa:FontAwesomeIcons.MapMarked}" IconFontFamily="FAS" x:Name="MenuItemSitesStations">
+            <ShellContent Title="Sites" Route="SiteListView" ContentTemplate="{DataTemplate siteViews:SiteListView}">
+                <ShellContent.Icon>
+                    <FontImageSource FontFamily="FAS" Glyph="{x:Static fa:FontAwesomeIcons.Map}" />
+                </ShellContent.Icon>
+            </ShellContent>
+            <ShellContent Title="Stations" Route="StationListView" ContentTemplate="{DataTemplate stationViews:StationListView}">
+                <ShellContent.Icon>
+                    <FontImageSource FontFamily="FAS" Glyph="{x:Static fa:FontAwesomeIcons.MapMarker}" />
+                </ShellContent.Icon>
+            </ShellContent>
+        </controls:FlyoutItemIconFont>
+
+    <!-- Equipment tab -->
+    <controls:FlyoutItemIconFont Title="Equipment" IconGlyph="{x:Static fa:FontAwesomeIcons.Toolbox}" IconFontFamily="FAS" x:Name="MenuItemEquipment">
+        <ShellContent Route="EquipmentListView" ContentTemplate="{DataTemplate equipmentViews:EquipmentListView}" />
+    </controls:FlyoutItemIconFont>
+
+    <!-- Samples -->
+    <controls:FlyoutItemIconFont Title="Field Samples" IconGlyph="{x:Static fa:FontAwesomeIcons.Vials}" IconFontFamily="FAS" x:Name="MenuItemSamples">
+        <ShellContent Title="e-DNA" Route="EdnaListView" ContentTemplate="{DataTemplate ednaViews:EdnaListView}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="FAS" Glyph="{x:Static fa:FontAwesomeIcons.Dna}" />
+            </ShellContent.Icon>
+        </ShellContent>
+        <ShellContent Title="Instrumental Readings" Route="ReadingListView" ContentTemplate="{DataTemplate readingViews:ReadingListView}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="FAS" Glyph="{x:Static fa:FontAwesomeIcons.EyeDropper}" />
+            </ShellContent.Icon>
+        </ShellContent>
+    </controls:FlyoutItemIconFont>
+
+    <!-- Observations and Media -->
+    <controls:FlyoutItemIconFont Title="Observations &amp; Media" IconGlyph="{x:Static fa:FontAwesomeIcons.PhotoVideo}" IconFontFamily="FAS" x:Name="MenuItemObservations">
+        <ShellContent Title="Observations" Route="ObservationListView" ContentTemplate="{DataTemplate observationViews:ObservationListView}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="FAS" Glyph="{x:Static fa:FontAwesomeIcons.Glasses}" />
+            </ShellContent.Icon>
+        </ShellContent>
+        <ShellContent Title="Media" Route="PhotoListView" ContentTemplate="{DataTemplate photoViews:PhotoListView}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="FAS" Glyph="{x:Static fa:FontAwesomeIcons.Camera}" />
+            </ShellContent.Icon>
+        </ShellContent>
+    </controls:FlyoutItemIconFont>
+
+    <controls:FlyoutItemIconFont Title="Export Activity" IconGlyph="{x:Static fa:FontAwesomeIcons.FileExport}" IconFontFamily="FAS" x:Name="MenuItemExport">
+        <ShellContent Route="ActivityExportPageView" ContentTemplate="{DataTemplate activityViews:ActivityExportPageView}" />
+        </controls:FlyoutItemIconFont>
+
+    <controls:FlyoutItemIconFont Title="Settings" IconGlyph="{x:Static fa:FontAwesomeIcons.Bars}" IconFontFamily="FAS" x:Name="MenuItemSettings">
+        <ShellContent Route="SettingsPageView" ContentTemplate="{DataTemplate settingsViews:SettingsPageView}" />
+    </controls:FlyoutItemIconFont>
+
+</Shell>

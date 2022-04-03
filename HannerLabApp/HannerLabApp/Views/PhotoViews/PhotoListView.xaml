@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<mvvm:ViewBase xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mvvm="clr-namespace:TinyMvvm.Forms;assembly=TinyMvvm.Forms"
+             xmlns:viewModels="clr-namespace:HannerLabApp.ViewModels.PhotoViewModels;assembly=HannerLabApp"
+             xmlns:converters="clr-namespace:HannerLabApp.Converters;assembly=HannerLabApp"
+             x:DataType="viewModels:PhotoListViewModel"
+             x:Class="HannerLabApp.Views.PhotoViews.PhotoListView"
+             x:TypeArguments="viewModels:PhotoListViewModel"
+             Title="Photos">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:Base64ToImageConverter x:Key="Base64ToImageConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!-- Tool bar with add station button -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Text="Add new (+)"
+            Command="{Binding AddCommand}"
+            Order="Primary"
+            Priority="0" />
+    </ContentPage.ToolbarItems>
+
+
+    <StackLayout>
+        <!-- Search bar to filter station with -->
+        <SearchBar Placeholder="Search items..." Text="{Binding SearchText}" />
+
+        <!-- Main collection view displaying all stations in list -->
+        <CollectionView x:Name="MyCollectionView"
+                        EmptyView="No photos available"
+                        ItemsSource="{Binding FilteredItems}"
+                        SelectionChangedCommand="{Binding SelectionChangeCommand}"
+                        SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference MyCollectionView}}"
+                        SelectedItem="{Binding SelectedItem}"
+                        SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewModels:PhotoViewModel">
+                    <Grid RowSpacing="5" ColumnSpacing="5" Padding="5">
+                        
+                        <!-- Layout grid definitions -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Card content -->
+                        <Image Grid.Row="0" Margin="0,0,0,10" Grid.RowSpan="3"  Source="{Binding File64.Value, Converter={StaticResource Base64ToImageConverter}}" Aspect="AspectFill" HeightRequest="100" />
+
+                        <Label Grid.Row="0" Grid.Column="1" Text="{ Binding Timestamp }" Style="{StaticResource ListItemTitleTextStyle}" />
+
+                        <Label Grid.Row="1" Grid.Column="1" Text="{ Binding PhotoType }" Style="{StaticResource ListItemDescriptionTextStyle}" />
+
+                        <Label Grid.Row="2" Grid.Column="1"  Margin="0,0,0,10" Text="{ Binding Notes }" Style="{StaticResource ListItemIdTextStyle}" />
+
+                        <!--<BoxView HeightRequest="1" Color="LightGray"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Opacity=".5" VerticalOptions="End"></BoxView>-->
+
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+
+
+</mvvm:ViewBase>

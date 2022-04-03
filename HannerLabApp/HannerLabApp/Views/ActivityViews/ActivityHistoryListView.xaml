@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<mvvm:ViewBase xmlns="http://xamarin.com/schemas/2014/forms" 
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:mvvm="clr-namespace:TinyMvvm.Forms;assembly=TinyMvvm.Forms"
+               xmlns:viewModels="clr-namespace:HannerLabApp.ViewModels.ActivityViewModels;assembly=HannerLabApp"
+               x:Class="HannerLabApp.Views.ActivityViews.ActivityHistoryListView"
+               x:DataType="viewModels:ActivityHistoryListViewModel"
+               x:TypeArguments="viewModels:ActivityHistoryListViewModel"
+               Title="Export History">
+
+    <ContentPage.Content>
+
+        <StackLayout>
+            <!-- Main collection view displaying all stations in list -->
+            <CollectionView x:Name="MyCollectionView"
+                        EmptyView="No exports available."
+                        ItemsSource="{Binding AllItems}"
+                        SelectionChangedCommand="{Binding SelectionChangeCommand}"
+                        SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference MyCollectionView}}"
+                        SelectedItem="{Binding SelectedItem}"
+                        SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:ActivityExportViewModel">
+                        <Grid RowSpacing="5" ColumnSpacing="5" Padding="5">
+                            <!-- Layout grid definitions -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="5*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Card content -->
+                            <Label Grid.Row="0" Grid.Column="0" 
+                               Text="{Binding Name}" 
+                               Style="{StaticResource ListItemTitleTextStyle}" />
+                            <Label Grid.Row="0" Grid.Column="1" 
+                               Text="{Binding UserSpecifiedId}" HorizontalTextAlignment="End"
+                               Style="{StaticResource ListItemIdTextStyle}" />
+                            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" 
+                               Text="{Binding Timestamp}" 
+                               Style="{StaticResource ListItemDescriptionTextStyle}" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+
+    </ContentPage.Content>
+
+</mvvm:ViewBase>

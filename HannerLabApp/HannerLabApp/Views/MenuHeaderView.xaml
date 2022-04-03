@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HannerLabApp.Views.MenuHeaderView">
+  
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource White}"/>
+                <Setter Property="FontSize" Value="30"/>
+            </Style>
+
+            <Style x:Key="SubtitleLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource White}"/>
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    
+    <ContentView.Content>
+        <StackLayout BackgroundColor="{StaticResource Primary}"
+            Orientation="Vertical"
+                     VerticalOptions="EndAndExpand"
+                     HorizontalOptions="CenterAndExpand"
+                     Margin="20"
+                     Spacing="5">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnTapGestureRecognizerTapped" />
+            </StackLayout.GestureRecognizers>
+            <Label Text=""
+                   x:Name="NameLabel"
+                   Style="{StaticResource TitleLabelStyle}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+            <Label Text=""
+                   x:Name="RecordersLabel"
+                   Style="{StaticResource SubtitleLabelStyle}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+            <Label Text="*Tap to set*"
+                   x:Name="HelpLabel"
+                   Style="{StaticResource SubtitleLabelStyle}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+        </StackLayout>
+    </ContentView.Content>
+
+
+</ContentView>

@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<views:DetailsViewBase
+    x:TypeArguments="models:Site"
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:HannerLabApp.Converters;assembly=HannerLabApp"
+    xmlns:behaviours="clr-namespace:HannerLabApp.Behaviours;assembly=HannerLabApp"
+    xmlns:views="clr-namespace:HannerLabApp.Views;assembly=HannerLabApp"
+    xmlns:models="clr-namespace:HannerLabApp.Models;assembly=HannerLabApp"
+    xmlns:controls="clr-namespace:HannerLabApp.Controls;assembly=HannerLabApp"
+    x:Class="HannerLabApp.Views.SiteViews.SiteDetailsView"
+    Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+            <converters:BoolDecisionToStringConverter x:Key="BoolDecisionToStringConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!-- Tool bar with advanced toggle -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Text="{Binding Path=ViewModel.IsAdvancedShown, Converter={StaticResource BoolDecisionToStringConverter}, ConverterParameter='Advanced;Basic'}"
+            Command="{Binding ToggleModeCommand}"
+            Order="Primary"
+            Priority="0" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid Padding="30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Site User Id -->
+                <StackLayout Grid.Row="0" IsVisible="{Binding ViewModel.IsAdvancedShown}">
+                    <Label Text="{Binding ViewModel.UserSpecifiedId.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.UserSpecifiedId.Value}" 
+                           Placeholder="{Binding ViewModel.UserSpecifiedId.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.UserSpecifiedId.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.UserSpecifiedId.Description}"
+                           IsVisible="{Binding ViewModel.UserSpecifiedId.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.UserSpecifiedId.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                            IsVisible="{Binding ViewModel.UserSpecifiedId.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                             Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Site User Id -->
+
+                <!-- Date -->
+                <StackLayout Grid.Row="1" IsVisible="{Binding ViewModel.IsAdvancedShown}">
+                    <Label Text="{Binding ViewModel.Timestamp.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <controls:DateTimePicker DateTime="{Binding ViewModel.Timestamp.Value}" StringFormat="dd-MM-yyyy HH:mm" />
+
+                    <Label Text="{Binding ViewModel.Timestamp.Description}"
+                           IsVisible="{Binding ViewModel.Timestamp.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Timestamp.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Timestamp.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Date -->
+
+                <!-- Site Name -->
+                <StackLayout IsVisible="True" Grid.Row="2">
+                    <Label Text="{Binding ViewModel.Name.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.Name.Value}" 
+                           Placeholder="{Binding ViewModel.Name.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.Name.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.Name.Description}"
+                           IsVisible="{Binding ViewModel.Name.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Name.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Name.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Site Name -->
+
+                <!-- Site Description -->
+                <StackLayout IsVisible="True" Grid.Row="3">
+                    <Label Text="{Binding ViewModel.Description.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.Description.Value}" 
+                           Placeholder="{Binding ViewModel.Description.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.Description.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.Description.Description}"
+                           IsVisible="{Binding ViewModel.Description.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Description.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Description.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Site Description -->
+
+                <!-- Country -->
+                <StackLayout Grid.Row="4" IsVisible="{Binding ViewModel.IsAdvancedShown}">
+                    <Label Text="{Binding ViewModel.Country.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.Country.Value}" 
+                           Placeholder="{Binding ViewModel.Country.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.Country.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.Country.Description}"
+                           IsVisible="{Binding ViewModel.Country.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Country.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Country.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Country -->
+
+                <!-- StateProvince -->
+                <StackLayout IsVisible="{Binding ViewModel.IsAdvancedShown}" Grid.Row="5">
+                    <Label Text="{Binding ViewModel.StateProvince.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.StateProvince.Value}" 
+                           Placeholder="{Binding ViewModel.StateProvince.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.StateProvince.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.StateProvince.Description}"
+                           IsVisible="{Binding ViewModel.StateProvince.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.StateProvince.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.StateProvince.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /StateProvince -->
+
+                <!-- Region -->
+                <StackLayout IsVisible="{Binding ViewModel.IsAdvancedShown}" Grid.Row="6">
+                    <Label Text="{Binding ViewModel.Region.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.Region.Value}" 
+                           Placeholder="{Binding ViewModel.Region.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.Region.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.Region.Description}"
+                           IsVisible="{Binding ViewModel.Region.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Region.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Region.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Region -->
+
+                <!-- Locality -->
+                <StackLayout IsVisible="{Binding ViewModel.IsAdvancedShown}" Grid.Row="7">
+                    <Label Text="{Binding ViewModel.Locality.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.Locality.Value}" 
+                           Placeholder="{Binding ViewModel.Locality.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.Locality.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.Locality.Description}"
+                           IsVisible="{Binding ViewModel.Locality.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Locality.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Locality.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Locality -->
+
+                <!-- WaterBody -->
+                <StackLayout IsVisible="{Binding ViewModel.IsAdvancedShown}" Grid.Row="8">
+                    <Label Text="{Binding ViewModel.WaterBody.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.WaterBody.Value}" 
+                           Placeholder="{Binding ViewModel.WaterBody.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.WaterBody.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.WaterBody.Description}"
+                           IsVisible="{Binding ViewModel.WaterBody.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.WaterBody.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.WaterBody.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /WaterBody -->
+
+                <!-- Hydrology -->
+                <StackLayout IsVisible="{Binding ViewModel.IsAdvancedShown}" Grid.Row="9">
+                    <Label Text="{Binding ViewModel.Hydrology.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.Hydrology.Value}" 
+                           Placeholder="{Binding ViewModel.Hydrology.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.Hydrology.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.Hydrology.Description}"
+                           IsVisible="{Binding ViewModel.Hydrology.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Hydrology.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Hydrology.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Hydrology -->
+
+                <!-- Geology -->
+                <StackLayout IsVisible="{Binding ViewModel.IsAdvancedShown}" Grid.Row="10">
+                    <Label Text="{Binding ViewModel.Geology.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.Geology.Value}" 
+                           Placeholder="{Binding ViewModel.Geology.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.Geology.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.Geology.Description}"
+                           IsVisible="{Binding ViewModel.Geology.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Geology.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Geology.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Geology -->
+
+                <!-- Site Notes -->
+                <StackLayout IsVisible="True" Grid.Row="11">
+                    <Label Text="{Binding ViewModel.Notes.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.Notes.Value}" 
+                           Placeholder="{Binding ViewModel.Notes.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.Notes.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.Notes.Description}"
+                           IsVisible="{Binding ViewModel.Notes.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Notes.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Notes.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Site Notes -->
+
+                <!-- Save/delete/ button -->
+                <StackLayout Grid.Row="12"
+                             IsVisible="True"
+                             Orientation="Horizontal"
+                             HorizontalOptions="Center">
+                    <Button Text="Save"
+                            HorizontalOptions="Center"
+                            WidthRequest="275"
+                            Command="{Binding SaveCommand}"/>
+                    <Button Text="Delete"
+                            IsVisible="{Binding IsEdit}"
+                            HorizontalOptions="Center"
+                            WidthRequest="275"
+                            Command="{Binding DeleteCommand}"/>
+                </StackLayout>
+
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+
+</views:DetailsViewBase>

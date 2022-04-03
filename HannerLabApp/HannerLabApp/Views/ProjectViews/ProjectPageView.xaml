@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<mvvm:ViewBase xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mvvm="clr-namespace:TinyMvvm.Forms;assembly=TinyMvvm.Forms"
+             xmlns:projectViewModels="clr-namespace:HannerLabApp.ViewModels.ProjectViewModels;assembly=HannerLabApp"
+             xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             x:DataType="projectViewModels:ProjectPageViewModel"
+             x:Class="HannerLabApp.Views.ProjectViews.ProjectPageView"
+             x:TypeArguments="projectViewModels:ProjectPageViewModel"
+             BackgroundColor="{StaticResource LightGray}"
+             Title="{Binding SelectedProject.Name}">
+
+    <!-- Tool bar with add project button -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Text="Change Project"
+            Clicked="OnProjectPickerClicked"
+            Order="Primary"
+            Priority="0" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Frame Grid.Row="0" Grid.Column="0" HasShadow="False">
+            <StackLayout>
+                    <Label Text="General" TextColor="{StaticResource Primary}" FontSize="18" FontAttributes="Bold"/>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <FormattedString.Spans>
+                                    <Span Text="ID: "
+                                          FontAttributes="Bold"/>
+                                    <Span Text="{Binding InfoViewModel.Id}" />
+                                </FormattedString.Spans>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <FormattedString.Spans>
+                                    <Span Text="Name: "
+                                          FontAttributes="Bold"/>
+                                    <Span Text="{Binding InfoViewModel.Name}" />
+                                </FormattedString.Spans>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <FormattedString.Spans>
+                                    <Span Text="Description: "
+                                          FontAttributes="Bold"/>
+                                    <Span Text="{Binding InfoViewModel.Description}" />
+                                </FormattedString.Spans>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <FormattedString.Spans>
+                                    <Span Text="Institution: "
+                                          FontAttributes="Bold"/>
+                                    <Span Text="{Binding InfoViewModel.Institution}" />
+                                </FormattedString.Spans>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <FormattedString.Spans>
+                                    <Span Text="Contact Email: "
+                                          FontAttributes="Bold"/>
+                                    <Span Text="{Binding InfoViewModel.ContactEmail}" />
+                                </FormattedString.Spans>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <FormattedString.Spans>
+                                    <Span Text="Recorders: "
+                                          FontAttributes="Bold"/>
+                                    <Span Text="{Binding InfoViewModel.DefaultProjectRecorders}" />
+                                </FormattedString.Spans>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <FormattedString.Spans>
+                                    <Span Text="Last Synced: "
+                                          FontAttributes="Bold"/>
+                                    <Span Text="{Binding InfoViewModel.LastSynced}" />
+                                </FormattedString.Spans>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                </StackLayout>
+            </Frame>
+
+        <Frame Grid.Row="0" Grid.Column="1" HasShadow="False">
+            <StackLayout>
+                <Label Text="Other" TextColor="{StaticResource Primary}" FontSize="18" FontAttributes="Bold"/>
+                <forms:ChartView Chart="{Binding InfoViewModel.OtherChart}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+            </StackLayout>
+            </Frame>
+
+        <Frame Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HasShadow="False">
+                <StackLayout>
+                    <Label Text="Samples" TextColor="{StaticResource Primary}" FontSize="18" FontAttributes="Bold"/>
+                    <forms:ChartView Chart="{Binding InfoViewModel.SamplesChart}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+                </StackLayout>
+        </Frame>
+            
+            <!-- Hidden picker for choosing project -->
+            <Picker x:Name="ProjectPicker" IsVisible="False" Title="Select Project" ItemsSource="{Binding Projects}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedProject}" SelectedIndexChanged="OnProjectPickerSelectedIndexChanged"/>
+    </Grid>
+    </ContentPage.Content>
+
+</mvvm:ViewBase>

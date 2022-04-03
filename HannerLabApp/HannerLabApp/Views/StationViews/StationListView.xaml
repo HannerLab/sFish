@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<mvvm:ViewBase xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mvvm="clr-namespace:TinyMvvm.Forms;assembly=TinyMvvm.Forms"
+             xmlns:stationViewModels="clr-namespace:HannerLabApp.ViewModels.StationViewModels;assembly=HannerLabApp"
+             x:DataType="stationViewModels:StationListViewModel"
+             x:Class="HannerLabApp.Views.StationViews.StationListView"
+             x:TypeArguments="stationViewModels:StationListViewModel"
+             Title="Stations">
+
+    <!-- Tool bar with add station button -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Text="Add new (+)"
+            Command="{Binding AddCommand}"
+            Order="Primary"
+            Priority="0" />
+    </ContentPage.ToolbarItems>
+
+
+    <StackLayout>
+        <!-- Search bar to filter station with -->
+        <SearchBar Placeholder="Search items..." Text="{Binding SearchText}" />
+
+        <!-- Main collection view displaying all stations in list -->
+        <CollectionView x:Name="MyCollectionView"
+                        EmptyView="No stations available."
+                        ItemsSource="{Binding FilteredItems}"
+                        SelectionChangedCommand="{Binding SelectionChangeCommand}"
+                        SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference MyCollectionView}}"
+                        SelectedItem="{Binding SelectedItem}"
+                        SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="stationViewModels:StationViewModel">
+                    <Grid RowSpacing="5" ColumnSpacing="5" Padding="5">
+                        <!-- Layout grid definitions -->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Card content -->
+                        <Label Grid.Row="0" Grid.Column="0" 
+                               Text="{Binding Name.Value}" 
+                               Style="{StaticResource ListItemTitleTextStyle}" />
+                        <Label Grid.Row="0" Grid.Column="1" 
+                               Text="{Binding UserSpecifiedId.Value}" HorizontalTextAlignment="End"
+                               Style="{StaticResource ListItemIdTextStyle}" />
+                        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" 
+                               Text="{Binding Description.Value}" 
+                               Style="{StaticResource ListItemDescriptionTextStyle}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+
+
+</mvvm:ViewBase>

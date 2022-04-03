@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<views:DetailsViewBase
+    x:TypeArguments="models:Photo"
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:HannerLabApp.Converters;assembly=HannerLabApp"
+    xmlns:behaviours="clr-namespace:HannerLabApp.Behaviours;assembly=HannerLabApp"
+    xmlns:views="clr-namespace:HannerLabApp.Views;assembly=HannerLabApp"
+    xmlns:models="clr-namespace:HannerLabApp.Models;assembly=HannerLabApp"
+    xmlns:controls="clr-namespace:HannerLabApp.Controls;assembly=HannerLabApp"
+    x:Class="HannerLabApp.Views.PhotoViews.PhotoDetailsView"
+    Title="{Binding Title}">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+            <converters:BoolDecisionToStringConverter x:Key="BoolDecisionToStringConverter"/>
+            <converters:Base64ToImageConverter x:Key="Base64ToImageConverter"/>
+            <converters:StringToBoolConverter x:Key="StringToBoolConverter"/>
+            <converters:InverseStringToBoolConverter x:Key="InverseStringToBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!-- Tool bar with advanced toggle -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Text="{Binding Path=ViewModel.IsAdvancedShown, Converter={StaticResource BoolDecisionToStringConverter}, ConverterParameter='Advanced;Basic'}"
+            Command="{Binding ToggleModeCommand}"
+            Order="Primary"
+            Priority="0" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid Padding="30">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Photo buttons -->
+                <StackLayout Grid.Row="0" Grid.ColumnSpan="2" IsVisible="{Binding ViewModel.File64.Value, Converter={StaticResource InverseStringToBoolConverter}}"
+                             Orientation="Horizontal"
+                             HorizontalOptions="Center">
+                    <Button Text="Select Existing"
+                            HorizontalOptions="Center"
+                            WidthRequest="275"
+                            Command="{Binding SelectPhotoCommand}"/>
+                    <Button Text="Take New"
+                            HorizontalOptions="Center"
+                            WidthRequest="275"
+                            Command="{Binding CapturePhotoCommand}"/>
+                </StackLayout>
+                <!-- /Photo buttons-->
+
+                <!-- Photo display -->
+                <StackLayout Grid.Row="1" Grid.ColumnSpan="2" IsVisible="{Binding ViewModel.File64.Value, Converter={StaticResource StringToBoolConverter}}" >
+                    <Image Source="{Binding ViewModel.File64.Value, Converter={StaticResource Base64ToImageConverter}}"
+                           HeightRequest="150">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding RemovePhotoCommand}"
+                                NumberOfTapsRequired="1" />
+                        </Image.GestureRecognizers>
+                    </Image>
+
+                    <Label Text="{Binding ViewModel.File64.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.File64.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Photo display-->
+
+                <Label Grid.Row="2" Text="{Binding ViewModel.File64.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                       IsVisible="{Binding ViewModel.File64.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                       Style="{StaticResource ValidatableErrorTextStyle}"/>
+
+                <!-- Sample Date -->
+                <StackLayout Grid.Row="3" Grid.ColumnSpan="2" IsVisible="{Binding ViewModel.IsAdvancedShown}">
+                    <Label Text="{Binding ViewModel.Timestamp.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <controls:DateTimePicker DateTime="{Binding ViewModel.Timestamp.Value}" StringFormat="dd-MM-yyyy HH:mm" />
+
+                    <Label Text="{Binding ViewModel.Timestamp.Description}"
+                           IsVisible="{Binding ViewModel.Timestamp.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Timestamp.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Timestamp.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Sample Date-->
+
+                <!-- RecordedBy -->
+                <StackLayout Grid.Row="4" Grid.ColumnSpan="2" IsVisible="{Binding ViewModel.IsAdvancedShown}">
+                    <Label Text="{Binding ViewModel.RecordedBy.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.RecordedBy.Value}" 
+                           Placeholder="{Binding ViewModel.RecordedBy.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.RecordedBy.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.RecordedBy.Description}"
+                           IsVisible="{Binding ViewModel.RecordedBy.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.RecordedBy.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.RecordedBy.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /RecordedBy-->
+
+                <Label Grid.Row="5" Text="Tag this photo to 1 of the following:" Style="{StaticResource ValidatableTitleTextStyle}"/>
+
+                <!-- Station -->
+                <StackLayout Grid.Row="6" Grid.ColumnSpan="2">
+                    <Picker Title="{Binding ViewModel.Station.Title}" 
+                            ItemsSource="{Binding Stations, Mode=TwoWay}" 
+                            ItemDisplayBinding="{Binding Name}" 
+                            IsEnabled="True"
+                            SelectedIndexChanged="StationPicker_OnSelectedIndexChanged"
+                            x:Name="StationPicker"
+                            SelectedItem="{Binding ViewModel.Station.Value, Mode=TwoWay}" />
+
+                    <Label Text="{Binding ViewModel.Station.Description}"
+                           IsVisible="{Binding ViewModel.Station.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Station.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Station.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Station -->
+
+                <!-- Site -->
+                <StackLayout Grid.Row="7" Grid.ColumnSpan="2">
+                    <Picker Title="{Binding ViewModel.Site.Title}" 
+                            ItemsSource="{Binding Sites, Mode=TwoWay}" 
+                            ItemDisplayBinding="{Binding Name}" 
+                            IsEnabled="True"
+                            SelectedIndexChanged="SitePicker_OnSelectedIndexChanged"
+                            x:Name="SitePicker"
+                            SelectedItem="{Binding ViewModel.Site.Value, Mode=TwoWay}" />
+
+                    <Label Text="{Binding ViewModel.Site.Description}"
+                           IsVisible="{Binding ViewModel.Site.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Site.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Site.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Site -->
+
+                <!-- Observation -->
+                <StackLayout Grid.Row="8" Grid.ColumnSpan="2">
+                    <Picker Title="{Binding ViewModel.Observation.Title}" 
+                            ItemsSource="{Binding Observations, Mode=TwoWay}" 
+                            ItemDisplayBinding="{Binding Name}" 
+                            IsEnabled="True"
+                            SelectedIndexChanged="ObservationPicker_OnSelectedIndexChanged"
+                            x:Name="ObservationPicker"
+                            SelectedItem="{Binding ViewModel.Observation.Value, Mode=TwoWay}" />
+
+                    <Label Text="{Binding ViewModel.Observation.Description}"
+                           IsVisible="{Binding ViewModel.Observation.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Observation.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Observation.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Observation -->
+
+                <!-- Edna -->
+                <StackLayout Grid.Row="9" Grid.ColumnSpan="2">
+                    <Picker Title="{Binding ViewModel.Edna.Title}" 
+                            ItemsSource="{Binding Ednas, Mode=TwoWay}" 
+                            ItemDisplayBinding="{Binding Name}" 
+                            IsEnabled="True"
+                            SelectedIndexChanged="EdnaPicker_OnSelectedIndexChanged"
+                            x:Name="EdnaPicker"
+                            SelectedItem="{Binding ViewModel.Edna.Value, Mode=TwoWay}" />
+
+                    <Label Text="{Binding ViewModel.Edna.Description}"
+                           IsVisible="{Binding ViewModel.Edna.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Edna.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Edna.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Edna -->
+
+                <!-- Reading -->
+                <StackLayout Grid.Row="10" Grid.ColumnSpan="2">
+                    <Picker Title="{Binding ViewModel.Reading.Title}" 
+                            ItemsSource="{Binding Readings, Mode=TwoWay}" 
+                            ItemDisplayBinding="{Binding Name}" 
+                            IsEnabled="True"
+                            SelectedIndexChanged="ReadingPicker_OnSelectedIndexChanged"
+                            x:Name="ReadingPicker"
+                            SelectedItem="{Binding ViewModel.Reading.Value, Mode=TwoWay}" />
+
+                    <Label Text="{Binding ViewModel.Reading.Description}"
+                           IsVisible="{Binding ViewModel.Reading.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Reading.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Reading.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Reading -->
+
+                <!-- Sample Notes -->
+                <StackLayout Grid.Row="11" Grid.ColumnSpan="2">
+                    <Label Text="{Binding ViewModel.Notes.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.Notes.Value}" 
+                           Placeholder="{Binding ViewModel.Notes.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.Notes.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.Notes.Description}"
+                           IsVisible="{Binding ViewModel.Notes.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Notes.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Notes.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Sample Notes-->
+
+                <!-- Save/delete/ button -->
+                <StackLayout Grid.Row="12" Grid.ColumnSpan="2"
+                             Orientation="Horizontal"
+                             HorizontalOptions="Center">
+                    <Button Text="Save"
+                            HorizontalOptions="Center"
+                            WidthRequest="275"
+                            Command="{Binding SaveCommand}"/>
+                    <Button Text="Delete"
+                            IsVisible="{Binding IsEdit}"
+                            HorizontalOptions="Center"
+                            WidthRequest="275"
+                            Command="{Binding DeleteCommand}"/>
+                </StackLayout>
+
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+
+</views:DetailsViewBase>
