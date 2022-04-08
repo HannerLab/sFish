@@ -18,5 +18,10 @@ namespace HannerLabApp.Configuration
         public const string AppDescription = "The Sample and Field data collection Information System for the Hanner Lab.";
         public const string AppCopyright = "© 2022 The Hanner Lab, University of Guelph";
         public const string AppName = "sFish";
+
+        public const string ExportDateFormat = "yyyy-MM-dd";
+        public const string ExportTimeFormat = "HH:mm";
+        public const string ExportDateTimeFormat = "yyyy-MM-dd HH:mm";
+        public const string ExportPhotoTimeFormat = "yyyy-MM-dd-HHmmss";
     }
 }

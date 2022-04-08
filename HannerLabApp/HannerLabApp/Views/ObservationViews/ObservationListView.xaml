@@ -45,13 +45,13 @@
 
                         <!-- Card content -->
                         <Label Grid.Row="0" Grid.Column="0" 
-                               Text="{Binding UserSpecifiedId.Value}" 
+                               Text="{Binding Name.Value}" 
                                Style="{StaticResource ListItemTitleTextStyle}" />
                         <Label Grid.Row="0" Grid.Column="1" 
                                Text="{Binding UserSpecifiedId.Value}" HorizontalTextAlignment="End"
                                Style="{StaticResource ListItemIdTextStyle}" />
                         <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" 
-                               Text="{Binding UserSpecifiedId.Value}" 
+                               Text="{Binding Notes.Value}" 
                                Style="{StaticResource ListItemDescriptionTextStyle}" />
                     </Grid>
                 </DataTemplate>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -59,6 +59,11 @@ namespace HannerLabApp.Services.Exporters
             Export export = new Export();
 
             export.Activity = activity;
+
+            // Add Id's to match
+            export.Id = activity.Id;
+            export.ProjectId = activity.ProjectId;
+            export.ActivityId = activity.ActivityId;
 
             // Add project info
             export.Project = await _projectRepo.GetItemAsync(activity.ProjectId);
@@ -198,7 +203,7 @@ namespace HannerLabApp.Services.Exporters
                 row.ActivityComments = export.Activity.Notes ?? string.Empty;
                 row.ActivityDescription = export.Activity.Description ?? string.Empty;
                 row.ActivityEndTimestamp = export.Activity.TimestampEnd.ToString() ?? string.Empty;
-                row.ActivityExportTimestamp = export.Activity.Timestamp.ToString() ?? string.Empty;
+                row.ActivityExportTimestamp = export.Activity.Timestamp.ToString(Constants.ExportDateTimeFormat) ?? string.Empty;
                 row.ActivityStartTimestamp = export.Activity.TimestampStart.ToString() ?? string.Empty;
                 row.ActivityFieldCrew = export.Activity.OtherMembers ?? string.Empty;
                 row.ActivityLead = export.Activity.LeadMember ?? string.Empty;
@@ -226,7 +231,7 @@ namespace HannerLabApp.Services.Exporters
                 row.AttachmentRecordedBy = photo.RecordedBy ?? string.Empty;
                 row.AttachmentSiteId = photo.Site?.UserSpecifiedId ?? string.Empty;
                 row.AttachmentStationId = photo.Station?.UserSpecifiedId ?? string.Empty;
-                row.AttachmentTimestamp = photo.Timestamp.ToString() ?? string.Empty;
+                row.AttachmentTimestamp = photo.Timestamp.ToString(Constants.ExportDateTimeFormat) ?? string.Empty;
 
                 attachmentTable.Add(row);
             }
@@ -248,7 +253,7 @@ namespace HannerLabApp.Services.Exporters
                     EquipmentProjectId = export.Project.UserSpecifiedId ?? string.Empty,
                     EquipmentRecordedBy = e.RecordedBy ?? string.Empty,
                     EquipmentSerialNumber = e.SerialNumber ?? string.Empty,
-                    EquipmentTimestamp = e.Timestamp.ToString() ?? string.Empty,
+                    EquipmentTimestamp = e.Timestamp.ToString(Constants.ExportDateTimeFormat) ?? string.Empty,
                     EquipmentUnitTemperature = e.UnitTemperature ?? string.Empty,
                     EquipmentUnitChlorophyll = e.UnitChlorophyll ?? string.Empty,
                     EquipmentUnitConductivity = e.UnitConductivity ?? string.Empty,
@@ -287,7 +292,7 @@ namespace HannerLabApp.Services.Exporters
                     EventSamplingVolume = e.VolumeFiltered.ToString() ?? string.Empty,
                     EventStationId = e.Station?.UserSpecifiedId ?? string.Empty,
                     EventTimeFiltering = e.TimeFiltering.ToString() ?? string.Empty,
-                    EventTimestamp = e.Timestamp.ToString() ?? string.Empty
+                    EventTimestamp = e.Timestamp.ToString(Constants.ExportDateTimeFormat) ?? string.Empty
                 };
 
                 eventTable.Add(row);
@@ -311,7 +316,7 @@ namespace HannerLabApp.Services.Exporters
                     ObservationSiteId = o.Site?.UserSpecifiedId ?? string.Empty,
                     ObservationStationId = o.Station?.UserSpecifiedId ?? string.Empty,
                     ObservationStormYesterday = o.StormYesterday.GetDescription() ?? string.Empty,
-                    ObservationTimestamp = o.Timestamp.ToString() ?? string.Empty,
+                    ObservationTimestamp = o.Timestamp.ToString(Constants.ExportDateTimeFormat) ?? string.Empty,
                     ObservationWeatherAirTemperature = o.Temperature.ToString() ?? string.Empty,
                     ObservationWildLife = o.Wildlife ?? string.Empty,
                     ObservationWind = o.WindLevel.GetDescription() ?? string.Empty
@@ -331,7 +336,7 @@ namespace HannerLabApp.Services.Exporters
                 ProjectLeader = export.Project.Owner ?? string.Empty,
                 ProjectName = export.Project.Name ?? string.Empty,
                 ProjectRecordedBy = export.Project.RecordedBy ?? string.Empty,
-                ProjectTimestamp = export.Project.Timestamp.ToString() ?? string.Empty,
+                ProjectTimestamp = export.Project.Timestamp.ToString(Constants.ExportDateTimeFormat) ?? string.Empty,
             });
 
 
@@ -352,7 +357,7 @@ namespace HannerLabApp.Services.Exporters
                     ReadingSecchiTube = r.Secchi.ToString() ?? string.Empty,
                     ReadingStationId = r.Station?.UserSpecifiedId ?? string.Empty,
                     ReadingSuspendedSolids = r.SuspendedSolids.ToString() ?? string.Empty,
-                    ReadingTimestamp = r.Timestamp.ToString() ?? string.Empty,
+                    ReadingTimestamp = r.Timestamp.ToString(Constants.ExportDateTimeFormat) ?? string.Empty,
                     ReadingTurbidity = r.Turbidity.ToString() ?? string.Empty,
                     ReadingWaterConductivity = r.Conductivity.ToString() ?? string.Empty,
                     ReadingWaterPh = r.Ph.ToString() ?? string.Empty,
@@ -381,7 +386,7 @@ namespace HannerLabApp.Services.Exporters
                     SiteProvince = s.StateProvince ?? string.Empty,
                     SiteRecordedBy = s.RecordedBy ?? string.Empty,
                     SiteRegion = s.Region ?? string.Empty,
-                    SiteTimestamp = s.Timestamp.ToString() ?? string.Empty,
+                    SiteTimestamp = s.Timestamp.ToString(Constants.ExportDateTimeFormat) ?? string.Empty,
                     SiteWaterBody = s.WaterBody ?? string.Empty
                 };
 
@@ -410,7 +415,7 @@ namespace HannerLabApp.Services.Exporters
                 row.StationStratification = s.Stratification ?? string.Empty;
                 row.StationSubstrate = s.Substrate ?? string.Empty;
                 row.StationTerrestrialVegetation = s.VegetationTerrestrial ?? string.Empty;
-                row.StationTimestamp = s.Timestamp.ToString() ?? string.Empty;
+                row.StationTimestamp = s.Timestamp.ToString(Constants.ExportDateTimeFormat) ?? string.Empty;
                 row.StationWaterBody = s.WaterBody ?? string.Empty;
                 row.StationWayPoint = s.WayPoint ?? string.Empty;
 
@@ -451,7 +456,7 @@ namespace HannerLabApp.Services.Exporters
                 var row = new ExportProjectTable();
 
                 row.ProjectId = export.Project.UserSpecifiedId ?? string.Empty;
-                row.ProjectCreationDate = export.Project.Timestamp.ToString() ?? string.Empty;
+                row.ProjectCreationDate = export.Project.Timestamp.ToString(Constants.ExportDateTimeFormat) ?? string.Empty;
                 row.ProjectName = export.Project.Name ?? string.Empty;
                 row.ProjectRecordedBy = export.Project.RecordedBy ?? string.Empty;
                 row.ProjectOwner = export.Project.Owner ?? string.Empty;
@@ -481,8 +486,8 @@ namespace HannerLabApp.Services.Exporters
                 row.stationID = edna.Station.UserSpecifiedId ?? string.Empty;
                 row.collectorName = edna.CollectedBy ?? string.Empty;
                 row.replicateName = edna.Name ?? string.Empty;
-                row.collectionDate = edna.Timestamp.ToString() ?? string.Empty;
-                row.collectionTime = edna.Timestamp.ToString() ?? string.Empty;
+                row.collectionDate = edna.Timestamp.ToString(Constants.ExportDateFormat) ?? string.Empty;
+                row.collectionTime = edna.Timestamp.ToString(Constants.ExportTimeFormat) ?? string.Empty;
                 row.verbatimDepth = edna.Depth.ToString() ?? string.Empty;
                 row.flowRatems = edna.FlowRate.ToString() ?? string.Empty;
                 row.filtrationDurationmins = edna.TimeFiltering.ToString() ?? string.Empty;
@@ -502,8 +507,8 @@ namespace HannerLabApp.Services.Exporters
                 row.stationID = reading.Station.UserSpecifiedId ?? string.Empty;
                 row.collectorName = reading.CollectedBy ?? string.Empty;
                 row.replicateName = reading.Name ?? string.Empty;
-                row.collectionDate = reading.Timestamp.ToString() ?? string.Empty;
-                row.collectionTime = reading.Timestamp.ToString() ?? string.Empty;
+                row.collectionDate = reading.Timestamp.ToString(Constants.ExportDateFormat) ?? string.Empty;
+                row.collectionTime = reading.Timestamp.ToString(Constants.ExportTimeFormat) ?? string.Empty;
                 row.verbatimDepth = reading.Depth.ToString() ?? string.Empty;
                 row.dissolvedOxygenmgL = reading.DissolvedOxygen.ToString() ?? string.Empty;
                 row.waterTemperatureC = reading.Temperature.ToString() ?? string.Empty;
@@ -526,7 +531,6 @@ namespace HannerLabApp.Services.Exporters
         }
 
 
-
         /// <summary>
         /// Generates an activity export package from an export object. This will either be an excel file, or a zip file containing an excel sheet + pictures.
         /// </summary>
@@ -537,8 +541,6 @@ namespace HannerLabApp.Services.Exporters
         public static async Task<string> GenerateExportPackageAsync(Export export, bool includeAttachments,
             bool useMdmaprFormat)
         {
-            await Task.Delay(1);
-
             string excelFile64;
             string exportFilePath;
 
@@ -589,7 +591,9 @@ namespace HannerLabApp.Services.Exporters
 
                 // Write excel file
                 {
-                    var fullSavePath = Path.Combine(saveDir, "data.xlsx");
+                    var exportSaveFileName = export.FileBaseName + ".xlsx";
+                    
+                    var fullSavePath = Path.Combine(saveDir, exportSaveFileName);
                     var bytes = Convert.FromBase64String(excelFile64);
 
                     using (var stream = new MemoryStream(bytes))
@@ -604,7 +608,8 @@ namespace HannerLabApp.Services.Exporters
                 // Zip contents of tmp dir and return that
                 {
                     // Save zip to export 
-                    var exportSaveFileName = $"sFish_export_{export.Activity.UserSpecifiedId}_{export.Activity.Timestamp.ToString("yyyy-MM-dd")}.zip";
+                    var exportSaveFileName = export.FileBaseName + ".zip";
+
                     var fullSavePath = Path.Combine(Constants.ExportDirectory, exportSaveFileName);
 
                     var task = Task.Run(() => FileTools.ZipFolderContents(saveDir, fullSavePath));
@@ -623,7 +628,8 @@ namespace HannerLabApp.Services.Exporters
                 var saveDir = Path.Combine(Constants.TempDirectory, Guid.NewGuid() + "/");
                 Directory.CreateDirectory(saveDir);
 
-                var exportSaveFileName = $"sFish_export_{export.Activity.UserSpecifiedId}_{export.Activity.Timestamp.ToString("yyyy-MM-dd")}.xlsx";
+                var exportSaveFileName = export.FileBaseName + ".xlsx";
+                
                 var fullSavePath = Path.Combine(Constants.ExportDirectory, exportSaveFileName);
 
                 // Write excel file

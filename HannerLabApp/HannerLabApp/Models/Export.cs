@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using HannerLabApp.Configuration;
+using LiteDB;
 
 namespace HannerLabApp.Models
 {
@@ -23,5 +25,8 @@ namespace HannerLabApp.Models
         public IList<Observation> Observations { get; set; }
         public IList<Photo> Photos { get; set; }
         public IList<Equipment> Equipments { get; set; }
+
+        [BsonIgnoreAttribute]
+        public string FileBaseName => $"sFish_export_{this.Activity?.UserSpecifiedId}_{this.Activity?.Timestamp.ToString(Constants.ExportDateFormat)}";
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using HannerLabApp.Configuration;
 using HannerLabApp.Utils;
 using LiteDB;
 
@@ -48,7 +49,7 @@ namespace HannerLabApp.Models
                 else
                     n = IdGenerator.GetNewRandomId();
 
-                return $"{n}_{Timestamp.ToString("yyyy-MM-dd")}.jpg";
+                return $"{n}_{Timestamp.ToString(Constants.ExportPhotoTimeFormat)}.jpg";
             }
         }
     }

@@ -84,7 +84,7 @@ namespace HannerLabApp.ViewModels.ObservationViewModels
             new ValidatableObject<string> { Title = "Recorded by", Description = "The name of the person who recorded this observation." };
 
         public ValidatableObject<string> Notes { get; set; } =
-            new ValidatableObject<string> { Title = "Sample notes", Description = "Enter any notes related to this sample." };
+            new ValidatableObject<string> { Title = "Notes", Description = "Enter any notes related to this observation." };
 
         public ValidatableObject<string> Name { get; set; } =
             new ValidatableObject<string> { Title = "Name", Description = "Provide a name for this observation." };
