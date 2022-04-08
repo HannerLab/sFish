@@ -2,9 +2,6 @@
 
 ![logo](https://raw.githubusercontent.com/llalon/HannerLabAppMedia/main/sFish_icon.png)
 
-[![Reliability Rating](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=HannerLabApp&metric=reliability_rating&token=251ce6e259c14d355d2a5d509d7006d9b025cc4a)](https://sq.myhappyaccidents.xyz/dashboard?id=HannerLabApp)
-[![Maintainability Rating](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=HannerLabApp&metric=sqale_rating&token=251ce6e259c14d355d2a5d509d7006d9b025cc4a)](https://sq.myhappyaccidents.xyz/dashboard?id=HannerLabApp)
-
 ## About
 
 sFish (The **S**ample and **F**ield data collection **I**nformation **S**ystem for the **H**anner Lab) is a mobile application for iPadOS and android developed to facilitate data collection of environmental DNA (eDNA) within the field. sFish aims to be compatible with industry and research standards for eDNA sample collection including those used by the Department of Fisheries and Oceans Canada (DFO). 
