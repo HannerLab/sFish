@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HannerLabApp.iOS", "HannerL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HannerLabApp", "HannerLabApp\HannerLabApp\HannerLabApp.csproj", "{13FBB4CD-9AEC-47B0-A3AA-FF778F548003}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HannerLabApp.Tests", "HannerLabApp.Tests\HannerLabApp.Tests.csproj", "{73C2854A-93BD-4FB9-95AC-41A6B5C0FB7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,18 @@ Global
 		{13FBB4CD-9AEC-47B0-A3AA-FF778F548003}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{13FBB4CD-9AEC-47B0-A3AA-FF778F548003}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{13FBB4CD-9AEC-47B0-A3AA-FF778F548003}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
+		{73C2854A-93BD-4FB9-95AC-41A6B5C0FB7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73C2854A-93BD-4FB9-95AC-41A6B5C0FB7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73C2854A-93BD-4FB9-95AC-41A6B5C0FB7D}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{73C2854A-93BD-4FB9-95AC-41A6B5C0FB7D}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{73C2854A-93BD-4FB9-95AC-41A6B5C0FB7D}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{73C2854A-93BD-4FB9-95AC-41A6B5C0FB7D}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{73C2854A-93BD-4FB9-95AC-41A6B5C0FB7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73C2854A-93BD-4FB9-95AC-41A6B5C0FB7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73C2854A-93BD-4FB9-95AC-41A6B5C0FB7D}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{73C2854A-93BD-4FB9-95AC-41A6B5C0FB7D}.Release|iPhone.Build.0 = Release|Any CPU
+		{73C2854A-93BD-4FB9-95AC-41A6B5C0FB7D}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{73C2854A-93BD-4FB9-95AC-41A6B5C0FB7D}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
