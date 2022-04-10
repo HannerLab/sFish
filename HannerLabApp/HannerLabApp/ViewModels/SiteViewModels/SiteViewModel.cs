@@ -38,7 +38,9 @@ namespace HannerLabApp.ViewModels.SiteViewModels
                 WaterBody = this.WaterBody.Value,
                 Hydrology = this.Hydrology.Value,
                 Geology = this.Geology.Value,
-                Name = this.Name.Value
+                Name = this.Name.Value,
+                RecordedBy = this.RecordedBy.Value,
+                Timestamp = this.Timestamp.Value
             };
             set
             {
@@ -56,6 +58,8 @@ namespace HannerLabApp.ViewModels.SiteViewModels
                 this.WaterBody.Value = value.WaterBody;
                 this.Hydrology.Value = value.Hydrology;
                 this.Geology.Value = value.Geology;
+                this.RecordedBy.Value = value.RecordedBy;
+                this.Timestamp.Value = value.Timestamp;
             }
         }
 

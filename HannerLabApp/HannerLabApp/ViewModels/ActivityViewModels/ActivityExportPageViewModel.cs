@@ -32,10 +32,20 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
         private readonly IPageService _pageService;
         private readonly IFileShare _fileShare;
 
+        private const string DefaultExportMessage =
+            "Export a copy of all the current projects data to an Excel Workbook. For more advanced queries of data utilize the raw application data. For more information see the help page.";
+
         private bool _isLoading = false;
         private bool _isIncludeAttachmentsSelected;
         private bool _isUseMdmaprFormatSelected;
         private bool _isSoftExportSelected;
+        private string _exportMessage;
+
+        public string ExportMessage 
+        {
+            get => _exportMessage;
+            private set => Set(ref _exportMessage, value);
+        }
 
         public bool IsIncludeAttachmentsSelected
         {
@@ -71,6 +81,8 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
 
             ExportToFileCommand = new TinyCommand(async () => await ExportDataAsync());
             ActivityHistoryCommand = new TinyCommand(async () => await _pageService.NavigateToAsync("ActivityHistoryListView", null));
+
+            ExportMessage = DefaultExportMessage;
         }
 
         private async Task ExportDataAsync()
@@ -79,7 +91,7 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
             if (!IsSoftExportSelected)
             {
                 if (!await _pageService.ShowYesNoAlertAsync("Export Activity",
-                        "Once exported, all exported samples, instrumental readings, observations, and photos will no longer be shown in the app. \n\nUse soft export to prevent these items from being tagged as exported or enable \"Show exported samples\" within settings.",
+                        "Once exported, all exported samples, instrumental readings, observations, and photos will no longer be shown in the app. \n\nUse soft export to prevent these items from being tagged as exported.",
                         "Continue", "Cancel")) return;
             }
             
@@ -138,6 +150,7 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
             IsLoading = true;
 
             // Generate an activity export package from the activity.
+            ExportMessage = "Generating activity export";
             Export export = await _activityExportCreator.CreateActivityExportAsync(activity);
 
             // If there isn't anything to export, ask user if they are sure.
@@ -153,6 +166,7 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
             }
 
             // Generate export package file
+            ExportMessage = "Generating export package";
             string exportFilePath = await ActivityExportCreator.GenerateExportPackageAsync(export, IsIncludeAttachmentsSelected, IsUseMdmaprFormatSelected);
 
             // Check for success
@@ -168,12 +182,13 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
 
 #if DEBUG
             // For extracting file in debugger without having to go through adb
-            var xxxxx = Convert.ToBase64String(File.ReadAllBytes(exportFilePath));
+            var exportFileExtractDebug = Convert.ToBase64String(File.ReadAllBytes(exportFilePath));
 #endif
 
 
             // Only tag samples as exported if export was successful and soft export is not enabled.
             // Only save to db if soft export is not enabled.
+            ExportMessage = "Updating database";
             if (!IsSoftExportSelected)
             {
                 await _activityExportCreator.SaveExportAsync(export);
@@ -182,9 +197,11 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
 
 
             // Finally Share the file to user
+            ExportMessage = "Done";
             await _fileShare.ShareFileAsync(exportFilePath);
 
             IsLoading = false;
+            ExportMessage = DefaultExportMessage;
         }
     }
 }
