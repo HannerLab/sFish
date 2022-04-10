@@ -21,7 +21,7 @@ namespace HannerLabApp.ViewModels.EquipmentViewModels
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
 
-        public static string TitleBaseStatic => "Equipment Device";
+        public static readonly string TitleBaseStatic = "Equipment Device";
         public string TitleBase => TitleBaseStatic;
 
         public Equipment Model

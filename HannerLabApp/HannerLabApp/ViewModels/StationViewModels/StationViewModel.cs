@@ -18,7 +18,7 @@ namespace HannerLabApp.ViewModels.StationViewModels
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
 
-        public static string TitleBaseStatic = "Station";
+        public static readonly string TitleBaseStatic = "Station";
         public string TitleBase { get; private set; } = TitleBaseStatic;
 
         public Station Model

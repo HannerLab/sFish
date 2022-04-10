@@ -18,7 +18,7 @@ namespace HannerLabApp.ViewModels.ReadingViewModels
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
 
-        public static string TitleBaseStatic = "Instrumental Reading";
+        public static readonly string TitleBaseStatic = "Instrumental Reading";
         public string TitleBase => TitleBaseStatic;
 
         public Reading Model

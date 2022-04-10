@@ -5,6 +5,6 @@
     /// </summary>
     public interface IMediaService
     {
-        void SaveImageFromByte(byte[] imageByte, string filename);
+        void SaveImageFromByte(byte[] imageByte, string fileName);
     }
 }

@@ -19,7 +19,7 @@ namespace HannerLabApp.ViewModels.EdnaViewModels
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
 
-        public static string TitleBaseStatic = "e-DNA Filter Sample";
+        public static readonly string TitleBaseStatic = "e-DNA Filter Sample";
         public string TitleBase => TitleBaseStatic;
 
         public Edna Model

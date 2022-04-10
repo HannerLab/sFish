@@ -37,7 +37,7 @@ namespace HannerLabApp.Services
             await App.Current.MainPage.DisplayAlert(title, message, confirmationText);
         }
 
-        public async Task<bool> ShowYesNoAlertAsync(string title, string message, string yesText = "Yes", string noText = "No")
+        public async Task<bool> ShowYesNoAlertAsync(string title, string message, string yesText, string noText)
         {
             return await App.Current.MainPage.DisplayAlert(title, message, yesText, noText);
         }

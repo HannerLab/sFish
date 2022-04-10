@@ -15,8 +15,6 @@ namespace HannerLabApp.Utils
             {
                 var values = Enum.GetValues(e).Cast<Enum>();
 
-                //list.AddRange(values.Select(v => v.GetDescription().ToString()).Where(sz => !string.IsNullOrEmpty(sz)));
-
                 foreach (var v in values)
                 {
                     var sz = v.GetDescription().ToString();

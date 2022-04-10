@@ -18,7 +18,7 @@ namespace HannerLabApp.ViewModels.SiteViewModels
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
 
-        public static string TitleBaseStatic => "Site";
+        public static readonly string TitleBaseStatic = "Site";
         public string TitleBase => TitleBaseStatic;
 
         public Site Model

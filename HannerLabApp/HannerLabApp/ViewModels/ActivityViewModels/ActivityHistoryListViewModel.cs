@@ -57,7 +57,8 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
 
 #if DEBUG
             // For extracting file in debugger without having to go through adb
-            var xxxxx = Convert.ToBase64String(File.ReadAllBytes(exportFilePath));
+            var exportFileExtractDebug = Convert.ToBase64String(File.ReadAllBytes(exportFilePath));
+            Console.WriteLine(exportFileExtractDebug);
 #endif
 
             // Finally Share the file to user

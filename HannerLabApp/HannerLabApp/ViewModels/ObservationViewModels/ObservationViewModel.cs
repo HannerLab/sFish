@@ -18,7 +18,7 @@ namespace HannerLabApp.ViewModels.ObservationViewModels
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
 
-        public static string TitleBaseStatic = "Observation";
+        public static readonly string TitleBaseStatic = "Observation";
         public string TitleBase => TitleBaseStatic;
 
         public Observation Model

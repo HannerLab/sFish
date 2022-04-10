@@ -19,7 +19,7 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
             set => Set(ref _model, value);
         }
 
-        public static string TitleBaseStatic = "Activity Export";
+        public static readonly string TitleBaseStatic = "Activity Export";
         public string TitleBase => TitleBaseStatic;
         public bool IsAdvancedShown { get; set; }
         public bool IsValid => true;
