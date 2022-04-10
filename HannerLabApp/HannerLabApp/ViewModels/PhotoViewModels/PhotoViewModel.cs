@@ -22,7 +22,7 @@ namespace HannerLabApp.ViewModels.PhotoViewModels
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
 
-        public static string TitleBaseStatic = "Photo";
+        public static readonly string TitleBaseStatic = "Photo";
         public string TitleBase => TitleBaseStatic;
 
         /// <summary>

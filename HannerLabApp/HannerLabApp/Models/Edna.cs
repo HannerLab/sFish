@@ -5,7 +5,7 @@ namespace HannerLabApp.Models
     /// <summary>
     /// Main data model for a e-DNA filter collection sample or event
     /// </summary>
-    public class Edna : ISavable, ISample
+    public class Edna : ISample
     {
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }

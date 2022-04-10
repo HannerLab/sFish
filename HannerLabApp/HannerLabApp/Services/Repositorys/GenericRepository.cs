@@ -28,8 +28,6 @@ namespace HannerLabApp.Services.Repositorys
 
                 await col.EnsureIndexAsync(x => x.Id);
                 await col.EnsureIndexAsync(y => y.ProjectId);
-
-                //db.Dispose();
             }
         }
 
@@ -40,8 +38,6 @@ namespace HannerLabApp.Services.Repositorys
                 var col = db.GetCollection<T>();
 
                 await col.DeleteAsync(item.Id);
-
-                //db.Dispose();
             }
         }
 
@@ -52,8 +48,6 @@ namespace HannerLabApp.Services.Repositorys
                 var col = db.GetCollection<T>();
 
                 var ret = await col.FindOneAsync(x => x.Id == id);
-
-                //db.Dispose();
 
                 return ret;
             }
@@ -67,8 +61,6 @@ namespace HannerLabApp.Services.Repositorys
 
                 var items = await col.FindAllAsync();
 
-                //db.Dispose();
-
                 return items.ToList();
             }
         }
@@ -81,8 +73,6 @@ namespace HannerLabApp.Services.Repositorys
 
                 var items = await col.FindAllAsync();
 
-                //db.Dispose();
-
                 return items.ToList().Where(x => x.ProjectId == projectId);
             }
         }
@@ -94,8 +84,6 @@ namespace HannerLabApp.Services.Repositorys
                 var col = db.GetCollection<T>();
 
                 await col.UpdateAsync(item);
-
-                //db.Dispose();
             }
             
         }

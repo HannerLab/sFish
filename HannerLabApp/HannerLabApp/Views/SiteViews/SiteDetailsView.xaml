@@ -45,6 +45,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <!-- Site User Id -->
@@ -67,23 +68,8 @@
                 </StackLayout>
                 <!-- /Site User Id -->
 
-                <!-- Date -->
-                <StackLayout Grid.Row="1" IsVisible="{Binding ViewModel.IsAdvancedShown}">
-                    <Label Text="{Binding ViewModel.Timestamp.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
-                    <controls:DateTimePicker DateTime="{Binding ViewModel.Timestamp.Value}" StringFormat="dd-MM-yyyy HH:mm" />
-
-                    <Label Text="{Binding ViewModel.Timestamp.Description}"
-                           IsVisible="{Binding ViewModel.Timestamp.IsValid}"
-                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
-
-                    <Label Text="{Binding ViewModel.Timestamp.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
-                           IsVisible="{Binding ViewModel.Timestamp.IsValid, Converter={StaticResource InverseBoolConverter}}"
-                           Style="{StaticResource ValidatableErrorTextStyle}"/>
-                </StackLayout>
-                <!-- /Date -->
-
                 <!-- Site Name -->
-                <StackLayout IsVisible="True" Grid.Row="2">
+                <StackLayout Grid.Row="1">
                     <Label Text="{Binding ViewModel.Name.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
                     <Entry Text="{Binding ViewModel.Name.Value}" 
                            Placeholder="{Binding ViewModel.Name.Title}">
@@ -102,8 +88,43 @@
                 </StackLayout>
                 <!-- /Site Name -->
 
+                <!-- Date -->
+                <StackLayout Grid.Row="2" IsVisible="{Binding ViewModel.IsAdvancedShown}">
+                    <Label Text="{Binding ViewModel.Timestamp.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <controls:DateTimePicker DateTime="{Binding ViewModel.Timestamp.Value}" StringFormat="dd-MM-yyyy HH:mm" />
+
+                    <Label Text="{Binding ViewModel.Timestamp.Description}"
+                           IsVisible="{Binding ViewModel.Timestamp.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.Timestamp.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.Timestamp.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Date -->
+
+                <!-- Recorded by -->
+                <StackLayout Grid.Row="3" IsVisible="{Binding ViewModel.IsAdvancedShown}">
+                    <Label Text="{Binding ViewModel.RecordedBy.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
+                    <Entry Text="{Binding ViewModel.RecordedBy.Value}" 
+                           Placeholder="{Binding ViewModel.RecordedBy.Title}">
+                        <Entry.Behaviors>
+                            <behaviours:EntryLineValidationBehaviour IsValid="{Binding ViewModel.RecordedBy.IsValid}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Text="{Binding ViewModel.RecordedBy.Description}"
+                           IsVisible="{Binding ViewModel.RecordedBy.IsValid}"
+                           Style="{StaticResource ValidatableDescriptionTextStyle}"/>
+
+                    <Label Text="{Binding ViewModel.RecordedBy.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.RecordedBy.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                           Style="{StaticResource ValidatableErrorTextStyle}"/>
+                </StackLayout>
+                <!-- /Recordedby -->
+
                 <!-- Site Description -->
-                <StackLayout IsVisible="True" Grid.Row="3">
+                <StackLayout Grid.Row="4">
                     <Label Text="{Binding ViewModel.Description.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
                     <Entry Text="{Binding ViewModel.Description.Value}" 
                            Placeholder="{Binding ViewModel.Description.Title}">
@@ -123,7 +144,7 @@
                 <!-- /Site Description -->
 
                 <!-- Country -->
-                <StackLayout Grid.Row="4" IsVisible="{Binding ViewModel.IsAdvancedShown}">
+                <StackLayout Grid.Row="5" IsVisible="{Binding ViewModel.IsAdvancedShown}">
                     <Label Text="{Binding ViewModel.Country.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
                     <Entry Text="{Binding ViewModel.Country.Value}" 
                            Placeholder="{Binding ViewModel.Country.Title}">
@@ -143,7 +164,7 @@
                 <!-- /Country -->
 
                 <!-- StateProvince -->
-                <StackLayout IsVisible="{Binding ViewModel.IsAdvancedShown}" Grid.Row="5">
+                <StackLayout Grid.Row="6" IsVisible="{Binding ViewModel.IsAdvancedShown}">
                     <Label Text="{Binding ViewModel.StateProvince.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
                     <Entry Text="{Binding ViewModel.StateProvince.Value}" 
                            Placeholder="{Binding ViewModel.StateProvince.Title}">
@@ -163,7 +184,7 @@
                 <!-- /StateProvince -->
 
                 <!-- Region -->
-                <StackLayout IsVisible="{Binding ViewModel.IsAdvancedShown}" Grid.Row="6">
+                <StackLayout Grid.Row="7" IsVisible="{Binding ViewModel.IsAdvancedShown}">
                     <Label Text="{Binding ViewModel.Region.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
                     <Entry Text="{Binding ViewModel.Region.Value}" 
                            Placeholder="{Binding ViewModel.Region.Title}">
@@ -183,7 +204,7 @@
                 <!-- /Region -->
 
                 <!-- Locality -->
-                <StackLayout IsVisible="{Binding ViewModel.IsAdvancedShown}" Grid.Row="7">
+                <StackLayout Grid.Row="8" IsVisible="{Binding ViewModel.IsAdvancedShown}">
                     <Label Text="{Binding ViewModel.Locality.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
                     <Entry Text="{Binding ViewModel.Locality.Value}" 
                            Placeholder="{Binding ViewModel.Locality.Title}">
@@ -203,7 +224,7 @@
                 <!-- /Locality -->
 
                 <!-- WaterBody -->
-                <StackLayout IsVisible="{Binding ViewModel.IsAdvancedShown}" Grid.Row="8">
+                <StackLayout Grid.Row="9" IsVisible="{Binding ViewModel.IsAdvancedShown}">
                     <Label Text="{Binding ViewModel.WaterBody.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
                     <Entry Text="{Binding ViewModel.WaterBody.Value}" 
                            Placeholder="{Binding ViewModel.WaterBody.Title}">
@@ -223,7 +244,7 @@
                 <!-- /WaterBody -->
 
                 <!-- Hydrology -->
-                <StackLayout IsVisible="{Binding ViewModel.IsAdvancedShown}" Grid.Row="9">
+                <StackLayout Grid.Row="10" IsVisible="{Binding ViewModel.IsAdvancedShown}">
                     <Label Text="{Binding ViewModel.Hydrology.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
                     <Entry Text="{Binding ViewModel.Hydrology.Value}" 
                            Placeholder="{Binding ViewModel.Hydrology.Title}">
@@ -243,7 +264,7 @@
                 <!-- /Hydrology -->
 
                 <!-- Geology -->
-                <StackLayout IsVisible="{Binding ViewModel.IsAdvancedShown}" Grid.Row="10">
+                <StackLayout Grid.Row="11" IsVisible="{Binding ViewModel.IsAdvancedShown}">
                     <Label Text="{Binding ViewModel.Geology.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
                     <Entry Text="{Binding ViewModel.Geology.Value}" 
                            Placeholder="{Binding ViewModel.Geology.Title}">
@@ -263,7 +284,7 @@
                 <!-- /Geology -->
 
                 <!-- Site Notes -->
-                <StackLayout IsVisible="True" Grid.Row="11">
+                <StackLayout Grid.Row="12">
                     <Label Text="{Binding ViewModel.Notes.Title}" Style="{StaticResource ValidatableTitleTextStyle}"/>
                     <Entry Text="{Binding ViewModel.Notes.Value}" 
                            Placeholder="{Binding ViewModel.Notes.Title}">
@@ -283,7 +304,7 @@
                 <!-- /Site Notes -->
 
                 <!-- Save/delete/ button -->
-                <StackLayout Grid.Row="12"
+                <StackLayout Grid.Row="13"
                              IsVisible="True"
                              Orientation="Horizontal"
                              HorizontalOptions="Center">

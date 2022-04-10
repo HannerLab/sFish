@@ -44,8 +44,6 @@ namespace HannerLabApp.Services.Repositorys
 
                 await col.EnsureIndexAsync(x => x.Id);
                 await col.EnsureIndexAsync(y => y.ProjectId);
-
-                //db.Dispose();
             }
         }
 
@@ -57,8 +55,6 @@ namespace HannerLabApp.Services.Repositorys
 
                 await col.DeleteAsync(item.Id);
                 await _photoStore.DeletePhotoAsync(item.Id);
-
-                //db.Dispose();
             }
             
         }
@@ -72,8 +68,6 @@ namespace HannerLabApp.Services.Repositorys
                 var item = await col.FindOneAsync(x => x.Id == id);
 
                 item.File64 = await _photoStore.LoadPhotoAsync(item.Id);
-
-                //db.Dispose();
 
                 return item;
             }
@@ -97,8 +91,6 @@ namespace HannerLabApp.Services.Repositorys
                     photos.Add(i);
                 }
 
-                //db.Dispose();
-
                 return photos;
             }
         }
@@ -120,8 +112,6 @@ namespace HannerLabApp.Services.Repositorys
                     photos.Add(i);
                 }
 
-                //db.Dispose();
-
                 return photos;
             }
         }
@@ -134,8 +124,6 @@ namespace HannerLabApp.Services.Repositorys
                 var col = db.GetCollection<Photo>();
 
                 await col.UpdateAsync(item);
-
-                //db.Dispose();
             }
         }
     }

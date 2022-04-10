@@ -18,7 +18,7 @@ namespace HannerLabApp.ViewModels.ObservationViewModels
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
 
-        public static string TitleBaseStatic = "Observation";
+        public static readonly string TitleBaseStatic = "Observation";
         public string TitleBase => TitleBaseStatic;
 
         public Observation Model
@@ -84,7 +84,7 @@ namespace HannerLabApp.ViewModels.ObservationViewModels
             new ValidatableObject<string> { Title = "Recorded by", Description = "The name of the person who recorded this observation." };
 
         public ValidatableObject<string> Notes { get; set; } =
-            new ValidatableObject<string> { Title = "Sample notes", Description = "Enter any notes related to this sample." };
+            new ValidatableObject<string> { Title = "Notes", Description = "Enter any notes related to this observation." };
 
         public ValidatableObject<string> Name { get; set; } =
             new ValidatableObject<string> { Title = "Name", Description = "Provide a name for this observation." };

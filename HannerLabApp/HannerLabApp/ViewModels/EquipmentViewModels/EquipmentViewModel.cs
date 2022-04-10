@@ -21,7 +21,7 @@ namespace HannerLabApp.ViewModels.EquipmentViewModels
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
 
-        public static string TitleBaseStatic => "Equipment Device";
+        public static readonly string TitleBaseStatic = "Equipment Device";
         public string TitleBase => TitleBaseStatic;
 
         public Equipment Model
@@ -33,7 +33,6 @@ namespace HannerLabApp.ViewModels.EquipmentViewModels
                     Id = Id,
                     IsAdvancedShown = this.IsAdvancedShown,
                     ProjectId = this.ProjectId,
-                    RecordedBy = this.RecordedBy.Value,
                     Description = this.Description.Value,
                     Notes = this.Notes.Value,
                     UserSpecifiedId = this.UserSpecifiedId.Value,
@@ -43,10 +42,12 @@ namespace HannerLabApp.ViewModels.EquipmentViewModels
                     SerialNumber = this.SerialNumber.Value,
                     DeviceModel = this.DeviceModel.Value,
                     Category = this.Category.Value,
-                    Name = this.Name.Value
+                    Name = this.Name.Value,
+                    RecordedBy = this.RecordedBy.Value,
+                    Timestamp = this.Timestamp.Value
                 };
 
-                // Flatten units - TODO: Reflection or dict based method
+                // Flatten units
                 foreach (var i in this.Units.Value)
                 {
                     switch (i.UnitType)
@@ -120,8 +121,10 @@ namespace HannerLabApp.ViewModels.EquipmentViewModels
                 this.SerialNumber.Value = value.SerialNumber;
                 this.DeviceModel.Value = value.DeviceModel;
                 this.Category.Value = value.Category;
+                this.RecordedBy.Value = value.RecordedBy;
+                this.Timestamp.Value = value.Timestamp;
 
-                // Un-flatten units. TODO: Replace with dictionary?
+                // Un-flatten units
                 var units = new ObservableCollection<UnitViewModel>();
                 if (!string.IsNullOrEmpty(value.UnitDepth)) units.Add(new UnitViewModel() { UnitType = UnitType.Depth, UnitValue = value.UnitDepth });
                 if (!string.IsNullOrEmpty(value.UnitFlowRate)) units.Add(new UnitViewModel() { UnitType = UnitType.FlowRate, UnitValue = value.UnitFlowRate });

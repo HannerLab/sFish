@@ -26,12 +26,10 @@ namespace HannerLabApp.Services.Media
                 Device.BeginInvokeOnMainThread(async () =>
                 {
                     barcode = result.Text;
-                    //await _pageService.CloseModalAsync();
                     await _pageService.BackAsync();
                 });
             };
 
-            //await _pageService.OpenModalAsync(scanPage);
             await _pageService.NavigateToAsync(scanPage);
 
             while (scanPage.IsScanning)

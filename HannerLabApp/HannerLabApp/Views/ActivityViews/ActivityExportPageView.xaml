@@ -35,7 +35,7 @@
                                                 HorizontalOptions="CenterAndExpand"
                                                 Command="{Binding ExportToFileCommand}"/>
                                         <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
-                                        <Label Text="Export a copy of all the current projects data to an Excel Workbook. For more advanced queries of data utilize the raw application data. For more information see the help page."
+                                        <Label Text="{Binding ExportMessage}"
                                                HorizontalOptions="CenterAndExpand"
                                                WidthRequest="250"
                                                Style="{StaticResource ValidatableDescriptionTextStyle}"/>

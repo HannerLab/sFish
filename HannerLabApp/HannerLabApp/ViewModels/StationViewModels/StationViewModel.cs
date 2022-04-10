@@ -18,7 +18,7 @@ namespace HannerLabApp.ViewModels.StationViewModels
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
 
-        public static string TitleBaseStatic = "Station";
+        public static readonly string TitleBaseStatic = "Station";
         public string TitleBase { get; private set; } = TitleBaseStatic;
 
         public Station Model
@@ -46,7 +46,9 @@ namespace HannerLabApp.ViewModels.StationViewModels
                     Stratification = this.Stratification.Value,
                     VegetationAquatic = this.VegetationAquatic.Value,
                     VegetationTerrestrial = this.VegetationTerrestrial.Value,
-                    Name = this.Name.Value
+                    Name = this.Name.Value,
+                    RecordedBy = this.RecordedBy.Value,
+                    Timestamp = this.Timestamp.Value
                 };
             set
             {
@@ -71,6 +73,8 @@ namespace HannerLabApp.ViewModels.StationViewModels
                 this.Stratification.Value = value.Stratification;
                 this.VegetationAquatic.Value = value.VegetationAquatic;
                 this.VegetationTerrestrial.Value = value.VegetationTerrestrial;
+                this.RecordedBy.Value = value.RecordedBy;
+                this.Timestamp.Value = value.Timestamp;
             }
         }
 

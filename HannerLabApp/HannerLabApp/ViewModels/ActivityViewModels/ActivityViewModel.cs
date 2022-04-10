@@ -19,7 +19,7 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
 
-        public static string TitleBaseStatic = "Collecting Activity";
+        public static readonly string TitleBaseStatic = "Collecting Activity";
         public string TitleBase => TitleBaseStatic;
 
         public Activity Model

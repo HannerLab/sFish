@@ -32,8 +32,6 @@ namespace HannerLabApp.Services.Repositorys
 
                 item.File64 = await _photoStore.LoadPhotoAsync(item.Id);
 
-                //db.Dispose();
-
                 return item;
             }
         }
@@ -56,8 +54,6 @@ namespace HannerLabApp.Services.Repositorys
                     photos.Add(i);
                 }
 
-                //db.Dispose();
-
                 return photos;
             }
         }
@@ -78,8 +74,6 @@ namespace HannerLabApp.Services.Repositorys
 
                     photos.Add(i);
                 }
-
-                //db.Dispose();
 
                 return photos;
             }
