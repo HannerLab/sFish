@@ -7,6 +7,7 @@
 [![Reliability Rating](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=llalon_sFish_AYAULPacBW1WRJF0BbNg&metric=reliability_rating&token=6ae0b9115afad17b41daaeaf3be754b2df333f24)](https://sq.myhappyaccidents.xyz/dashboard?id=llalon_sFish_AYAULPacBW1WRJF0BbNg)
 [![Security Rating](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=llalon_sFish_AYAULPacBW1WRJF0BbNg&metric=security_rating&token=6ae0b9115afad17b41daaeaf3be754b2df333f24)](https://sq.myhappyaccidents.xyz/dashboard?id=llalon_sFish_AYAULPacBW1WRJF0BbNg)
 [![Lines of Code](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=llalon_sFish_AYAULPacBW1WRJF0BbNg&metric=ncloc&token=6ae0b9115afad17b41daaeaf3be754b2df333f24)](https://sq.myhappyaccidents.xyz/dashboard?id=llalon_sFish_AYAULPacBW1WRJF0BbNg)
+[![Duplicated Lines (%)](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=llalon_sFish_AYAULPacBW1WRJF0BbNg&metric=duplicated_lines_density&token=6ae0b9115afad17b41daaeaf3be754b2df333f24)](https://sq.myhappyaccidents.xyz/dashboard?id=llalon_sFish_AYAULPacBW1WRJF0BbNg)
 
 ## About
 
