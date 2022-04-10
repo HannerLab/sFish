@@ -2,8 +2,11 @@
 
 ![logo](https://raw.githubusercontent.com/llalon/HannerLabAppMedia/main/sFish_icon.png)
 
-[![Reliability Rating](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=HannerLabApp&metric=reliability_rating&token=251ce6e259c14d355d2a5d509d7006d9b025cc4a)](https://sq.myhappyaccidents.xyz/dashboard?id=HannerLabApp)
-[![Maintainability Rating](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=HannerLabApp&metric=sqale_rating&token=251ce6e259c14d355d2a5d509d7006d9b025cc4a)](https://sq.myhappyaccidents.xyz/dashboard?id=HannerLabApp)
+[![Quality Gate Status](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=llalon_sFish_AYAULPacBW1WRJF0BbNg&metric=alert_status&token=6ae0b9115afad17b41daaeaf3be754b2df333f24)](https://sq.myhappyaccidents.xyz/dashboard?id=llalon_sFish_AYAULPacBW1WRJF0BbNg)
+[![Maintainability Rating](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=llalon_sFish_AYAULPacBW1WRJF0BbNg&metric=sqale_rating&token=6ae0b9115afad17b41daaeaf3be754b2df333f24)](https://sq.myhappyaccidents.xyz/dashboard?id=llalon_sFish_AYAULPacBW1WRJF0BbNg)
+[![Reliability Rating](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=llalon_sFish_AYAULPacBW1WRJF0BbNg&metric=reliability_rating&token=6ae0b9115afad17b41daaeaf3be754b2df333f24)](https://sq.myhappyaccidents.xyz/dashboard?id=llalon_sFish_AYAULPacBW1WRJF0BbNg)
+[![Security Rating](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=llalon_sFish_AYAULPacBW1WRJF0BbNg&metric=security_rating&token=6ae0b9115afad17b41daaeaf3be754b2df333f24)](https://sq.myhappyaccidents.xyz/dashboard?id=llalon_sFish_AYAULPacBW1WRJF0BbNg)
+[![Lines of Code](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=llalon_sFish_AYAULPacBW1WRJF0BbNg&metric=ncloc&token=6ae0b9115afad17b41daaeaf3be754b2df333f24)](https://sq.myhappyaccidents.xyz/dashboard?id=llalon_sFish_AYAULPacBW1WRJF0BbNg)
 
 ## About
 
