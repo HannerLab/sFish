@@ -2,13 +2,6 @@
 
 ![logo](https://raw.githubusercontent.com/llalon/HannerLabAppMedia/main/sFish_icon.png)
 
-[![Quality Gate Status](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=llalon_sFish_AYAULPacBW1WRJF0BbNg&metric=alert_status&token=6ae0b9115afad17b41daaeaf3be754b2df333f24)](https://sq.myhappyaccidents.xyz/dashboard?id=llalon_sFish_AYAULPacBW1WRJF0BbNg)
-[![Maintainability Rating](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=llalon_sFish_AYAULPacBW1WRJF0BbNg&metric=sqale_rating&token=6ae0b9115afad17b41daaeaf3be754b2df333f24)](https://sq.myhappyaccidents.xyz/dashboard?id=llalon_sFish_AYAULPacBW1WRJF0BbNg)
-[![Reliability Rating](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=llalon_sFish_AYAULPacBW1WRJF0BbNg&metric=reliability_rating&token=6ae0b9115afad17b41daaeaf3be754b2df333f24)](https://sq.myhappyaccidents.xyz/dashboard?id=llalon_sFish_AYAULPacBW1WRJF0BbNg)
-[![Security Rating](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=llalon_sFish_AYAULPacBW1WRJF0BbNg&metric=security_rating&token=6ae0b9115afad17b41daaeaf3be754b2df333f24)](https://sq.myhappyaccidents.xyz/dashboard?id=llalon_sFish_AYAULPacBW1WRJF0BbNg)
-[![Lines of Code](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=llalon_sFish_AYAULPacBW1WRJF0BbNg&metric=ncloc&token=6ae0b9115afad17b41daaeaf3be754b2df333f24)](https://sq.myhappyaccidents.xyz/dashboard?id=llalon_sFish_AYAULPacBW1WRJF0BbNg)
-[![Duplicated Lines (%)](https://sq.myhappyaccidents.xyz/api/project_badges/measure?project=llalon_sFish_AYAULPacBW1WRJF0BbNg&metric=duplicated_lines_density&token=6ae0b9115afad17b41daaeaf3be754b2df333f24)](https://sq.myhappyaccidents.xyz/dashboard?id=llalon_sFish_AYAULPacBW1WRJF0BbNg)
-
 ## About
 
 sFish (The **S**ample and **F**ield data collection **I**nformation **S**ystem for the **H**anner Lab) is a mobile application for iPadOS and android developed to facilitate data collection of environmental DNA (eDNA) within the field. sFish aims to be compatible with industry and research standards for eDNA sample collection including those used by the Department of Fisheries and Oceans Canada (DFO). 
