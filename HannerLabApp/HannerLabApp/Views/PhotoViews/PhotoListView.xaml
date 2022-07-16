@@ -55,7 +55,7 @@
                         </Grid.RowDefinitions>
 
                         <!-- Card content -->
-                        <Image Grid.Row="0" Margin="0,0,0,10" Grid.RowSpan="3"  Source="{Binding File64.Value, Converter={StaticResource Base64ToImageConverter}}" Aspect="AspectFill" HeightRequest="100" />
+                        <Image Grid.Row="0" Margin="0,0,0,10" Grid.RowSpan="3"  Source="{Binding Thumbnail, Converter={StaticResource Base64ToImageConverter}}" Aspect="AspectFill" HeightRequest="100" />
 
                         <Label Grid.Row="0" Grid.Column="1" Text="{ Binding Timestamp }" Style="{StaticResource ListItemTitleTextStyle}" />
 

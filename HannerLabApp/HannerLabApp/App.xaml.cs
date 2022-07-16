@@ -32,6 +32,8 @@ using HannerLabApp.Views.SiteViews;
 using HannerLabApp.Views.StationViews;
 using LiteDB;
 using Newtonsoft.Json;
+using Serilog;
+using Serilog.Exceptions;
 using TinyMvvm;
 using TinyMvvm.Autofac;
 using TinyMvvm.Forms;
@@ -68,9 +70,15 @@ namespace HannerLabApp
             containerBuilder.RegisterAssemblyTypes(appAssembly)
                    .Where(x => x.IsSubclassOf(typeof(ViewModelBase)));
 
-            // Platform specific services - use Xamarin Dependency service resolve
+            // Platform specific services - uses Xamarin Dependency service resolve
             //IDeviceIdentifier
             //IMediaService
+
+            // Logging
+            containerBuilder.Register<ILogger>((c, p) => new LoggerConfiguration()
+                .Enrich.WithExceptionDetails()
+                .WriteTo.File(Path.Combine(Constants.LogDirectory, "Log.txt"), rollingInterval: RollingInterval.Day)
+                .CreateLogger()).SingleInstance();
 
             // Services
             containerBuilder.RegisterType<PageService>().As<IPageService>();
@@ -95,8 +103,6 @@ namespace HannerLabApp
             containerBuilder.RegisterType<GenericRepository<Equipment>>().As<IRepository<Equipment>>();
 
             containerBuilder.RegisterType<GenericRepository<Activity>>().As<IRepository<Activity>>();
-
-            // TODO: This shouldn't depend on all that validation stuff.
             containerBuilder.RegisterType<GenericRepository<Export>>().As<IRepository<Export>>();
 
             // RO repos
@@ -142,7 +148,6 @@ namespace HannerLabApp
             containerBuilder.RegisterType<ActivityViewModel>().As<IValidableViewModel<Activity>>();
             containerBuilder.RegisterType<ProjectInfoViewModel>().As<ProjectInfoViewModel>();
 
-            // TODO: Same with this as above
             containerBuilder.RegisterType<ActivityExportViewModel>().As<IValidableViewModel<Export>>();
 
             // Details View Models
@@ -203,11 +208,12 @@ namespace HannerLabApp
             var fileFullPath = conString.Filename;
 
             // Create folder structure
+            Directory.CreateDirectory(Constants.LogDirectory);
             Directory.CreateDirectory(Constants.AppDataDirectory);
             Directory.CreateDirectory(Constants.TempDirectory);
             Directory.CreateDirectory(Constants.ExportDirectory);
             Directory.CreateDirectory(Constants.MediaDirectory);
-            
+
             // Initialize db using non async method
             if (!File.Exists(fileFullPath))
             {

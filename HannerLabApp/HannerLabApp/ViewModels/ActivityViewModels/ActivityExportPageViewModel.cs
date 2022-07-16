@@ -10,6 +10,7 @@ using HannerLabApp.Services.Managers;
 using HannerLabApp.Services.Media;
 using HannerLabApp.Utils;
 using HannerLabApp.Views;
+using Serilog;
 using TinyMvvm;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -28,6 +29,8 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
     /// </summary>
     public class ActivityExportPageViewModel : ViewModelBase
     {
+        private readonly ILogger _logger;
+
         private readonly IActivityExportCreator _activityExportCreator;
         private readonly IPageService _pageService;
         private readonly IFileShare _fileShare;
@@ -73,8 +76,10 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
 
         public ICommand ExportToFileCommand { get; private set; }
         public ICommand ActivityHistoryCommand { get; private set; }
-        public ActivityExportPageViewModel(IPageService pageService, IFileShare fileShare, IActivityExportCreator activityExportCreator)
+        public ActivityExportPageViewModel(ILogger logger, IPageService pageService, IFileShare fileShare, IActivityExportCreator activityExportCreator)
         {
+            _logger = logger;
+
             _pageService = pageService;
             _activityExportCreator = activityExportCreator;
             _fileShare = fileShare;
@@ -87,23 +92,33 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
 
         private async Task ExportDataAsync()
         {
-            // Prompt user to confirm before
-            if (!IsSoftExportSelected)
-            {
-                if (!await _pageService.ShowYesNoAlertAsync("Export Activity",
-                        "Once exported, all exported samples, instrumental readings, observations, and photos will no longer be shown in the app. \n\nUse soft export to prevent these items from being tagged as exported.",
-                        "Continue", "Cancel")) return;
-            }
-            
-            // Alert user that MDMAPR does not support custom units.
-            if (IsUseMdmaprFormatSelected)
-            {
-                await _pageService.ShowAlertAsync("Warning!",
-                    "You have selected to export using the MDMAPR2.0 format. MDMAPR does not support custom units. Please ensure you have recorded using the correct units, or convert the units after export. For more information visit the MDMAPR homepage.",
-                    "I understand");
-            }
+            _logger.Information("Exporting data");
 
-            await SpawnActivityDetailsViewModelAsync();
+            try
+            {
+
+                // Prompt user to confirm before
+                if (!IsSoftExportSelected)
+                {
+                    if (!await _pageService.ShowYesNoAlertAsync("Export Activity",
+                            "Once exported, all exported samples, instrumental readings, observations, and photos will no longer be shown in the app. \n\nUse soft export to prevent these items from being tagged as exported.",
+                            "Continue", "Cancel")) return;
+                }
+
+                // Alert user that MDMAPR does not support custom units.
+                if (IsUseMdmaprFormatSelected)
+                {
+                    await _pageService.ShowAlertAsync("Warning!",
+                        "You have selected to export using the MDMAPR2.0 format. MDMAPR does not support custom units. Please ensure you have recorded using the correct units, or convert the units after export. For more information visit the MDMAPR homepage.",
+                        "I understand");
+                }
+
+                await SpawnActivityDetailsViewModelAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Unhandled exception during ExportDataAsync()");
+            }
         }
 
 
@@ -114,15 +129,22 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
         /// <returns></returns>
         private async Task SpawnActivityDetailsViewModelAsync()
         {
-            // Subscribe to the response for when the user completes the activity details
-            MessagingCenter.Subscribe<ActivityManager, Activity>
-                (this, MsgEvents.GetModel(typeof(Activity), MsgEvents.Event.Addition), 
+            try
+            {
+                // Subscribe to the response for when the user completes the activity details
+                MessagingCenter.Subscribe<ActivityManager, Activity>
+                (this, MsgEvents.GetModel(typeof(Activity), MsgEvents.Event.Addition),
                     async (ActivityManager source, Activity parameter) => await ReceiveCompletedActivityDetailsAsync(source, parameter));
 
-            var vm = App.AppContainer.Resolve<IValidableViewModel<Activity>>();
-            var v = App.AppContainer.Resolve<IDetailsView<Activity>>();
+                var vm = App.AppContainer.Resolve<IValidableViewModel<Activity>>();
+                var v = App.AppContainer.Resolve<IDetailsView<Activity>>();
 
-            await _pageService.NavigateToAsync(v.GetType().Name, vm);
+                await _pageService.NavigateToAsync(v.GetType().Name, vm);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Unhandled exception during SpawnActivityDetailsViewModelAsync()");
+            }
         }
 
         /// <summary>
@@ -132,12 +154,18 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
         /// <param name="parameter"></param>
         private async Task ReceiveCompletedActivityDetailsAsync(ActivityManager source, Activity parameter)
         {
-            // unsubscribe from message
-            MessagingCenter.Unsubscribe<ActivityManager, Activity>(this,
-                MsgEvents.GetModel(typeof(Activity), MsgEvents.Event.Addition));
+            try
+            {
+                // unsubscribe from message
+                MessagingCenter.Unsubscribe<ActivityManager, Activity>(this,
+                    MsgEvents.GetModel(typeof(Activity), MsgEvents.Event.Addition));
 
-            await GenerateExportAsync(parameter);
-
+                await GenerateExportAsync(parameter);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Unhandled exception during ReceiveCompletedActivityDetailsAsync()");
+            }
         }
 
         /// <summary>
@@ -147,14 +175,32 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
         /// <returns></returns>
         private async Task GenerateExportAsync(Activity activity)
         {
+            _logger.Information("Generating export data");
+
             IsLoading = true;
 
             // Generate an activity export package from the activity.
             ExportMessage = "Generating activity export";
-            Export export = await _activityExportCreator.CreateActivityExportAsync(activity);
+
+            Export export = null;
+            try
+            {
+                export = await _activityExportCreator.CreateActivityExportAsync(activity);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Unhandled exception during CreateActivityExportAsync() in GenerateExportAsync()");
+                return;
+            }
+
+            if (export == null)
+            {
+                _logger.Error("Error during CreateActivityExportAsync() in GenerateExportAsync(). export is null.");
+                return;
+            }
 
             // If there isn't anything to export, ask user if they are sure.
-            if (export.Ednas.Count + export.Observations.Count + export.Readings.Count + export.Photos.Count == 0)
+            if (export?.Ednas?.Count + export?.Observations?.Count + export?.Readings?.Count + export?.Photos?.Count == 0)
             {
                 if (!await _pageService.ShowYesNoAlertAsync("Warning!",
                         "Exported activity contains no samples, observations, or photos. Continue export anyway?",
@@ -167,14 +213,27 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
 
             // Generate export package file
             ExportMessage = "Generating export package";
-            string exportFilePath = await ActivityExportCreator.GenerateExportPackageAsync(export, IsIncludeAttachmentsSelected, IsUseMdmaprFormatSelected);
+
+            string exportFilePath = string.Empty;
+            try
+            {
+                exportFilePath = await ActivityExportCreator.GenerateExportPackageAsync(export, IsIncludeAttachmentsSelected, IsUseMdmaprFormatSelected);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Unhandled exception during CreateActivityExportAsync() in GenerateExportPackageAsync()");
+                return;
+            }
 
             // Check for success
             if (string.IsNullOrEmpty(exportFilePath))
             {
                 var ans = await _pageService.ShowYesNoAlertAsync("Error!", "Could not generate export package. Copy diagnostic data to clipboard instead?", "Yes", "No");
+                
                 if (ans)
                     await Clipboard.SetTextAsync(export.ToString());
+
+                _logger.Error("Error during CreateActivityExportAsync() in GenerateExportPackageAsync(). exportFilePath is null or empty");
 
                 IsLoading = false;
                 return;
@@ -192,14 +251,40 @@ namespace HannerLabApp.ViewModels.ActivityViewModels
             ExportMessage = "Updating database";
             if (!IsSoftExportSelected)
             {
-                await _activityExportCreator.SaveExportAsync(export);
-                await _activityExportCreator.TagItemsAsExportedAsync(export);
+                try
+                {
+                    await _activityExportCreator.SaveExportAsync(export);
+                }
+                catch(Exception ex)
+                {
+                    _logger.Error(ex, "Unhandled exception during CreateActivityExportAsync() in SaveExportAsync()");
+                    return;
+                }
+
+                try
+                {
+                    await _activityExportCreator.TagItemsAsExportedAsync(export);
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex, "Unhandled exception during CreateActivityExportAsync() in TagItemsAsExportedAsync()");
+                    return;
+                }
             }
 
 
             // Finally Share the file to user
             ExportMessage = "Done";
-            await _fileShare.ShareFileAsync(exportFilePath);
+
+            try
+            {
+                await _fileShare.ShareFileAsync(exportFilePath);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Unhandled exception during CreateActivityExportAsync() in ShareFileAsync()");
+                return;
+            }
 
             IsLoading = false;
             ExportMessage = DefaultExportMessage;

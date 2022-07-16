@@ -214,12 +214,14 @@ namespace HannerLabApp.ViewModels.PhotoViewModels
         private async Task CapturePhotoAsync()
         {
             var res = await _photoService.CapturePhotoAsync(App.AppSettings.IsSavePhotosToGalleryEnabled);
-
-            if (!string.IsNullOrEmpty(res))
+            
+            if (res != null)
             {
                 var m = ViewModel.Model;
-                m.File64 = res;
+                m.File = res;
                 this.ViewModel.Model = m;
+
+                await LoadFileImageThumbnailAsync();
             }
         }
 
@@ -227,15 +229,18 @@ namespace HannerLabApp.ViewModels.PhotoViewModels
         {
             var res = await _photoService.PickPhotoAsync();
 
-            if (!string.IsNullOrEmpty(res))
+            if (res != null)
             {
                 var m = ViewModel.Model;
-                m.File64 = res;
+                m.File = res;
                 this.ViewModel.Model = m;
+
+                await LoadFileImageThumbnailAsync();
             }
         }
 
         private bool _hasPhotoRemovalWarningBeenDisplayed = false;
+
         private async Task RemovePhotoAsync()
         {
             // Disallow swapping photo... They should just create a new entry and delete this one
@@ -258,8 +263,22 @@ namespace HannerLabApp.ViewModels.PhotoViewModels
             if (res)
             {
                 var m = ViewModel.Model;
-                m.File64 = string.Empty;
+                m.File = null;
                 this.ViewModel.Model = m;
+
+                await LoadFileImageThumbnailAsync();
+            }
+        }
+
+        private async Task LoadFileImageThumbnailAsync()
+        {
+            try
+            {
+                await (this.ViewModel as PhotoViewModel).LoadFileImageThumbnailAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Could not generate image thumbnail.", ex);
             }
         }
     }
