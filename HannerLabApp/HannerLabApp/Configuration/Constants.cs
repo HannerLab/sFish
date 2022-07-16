@@ -15,7 +15,7 @@ namespace HannerLabApp.Configuration
         public static readonly string ExportDirectory = Path.Combine(FileSystem.AppDataDirectory, "exports/");
 
         public const string AppGithubBaseRepoUrl = "HannerLab/sFish";
-        public const string AppVersionString = "1.0.1";
+        public const string AppVersionString = "1.0.2";
         public const string AppDescription = "The Sample and Field data collection Information System for the Hanner Lab.";
         public const string AppCopyright = "© 2022 The Hanner Lab, University of Guelph";
         public const string AppName = "sFish";
