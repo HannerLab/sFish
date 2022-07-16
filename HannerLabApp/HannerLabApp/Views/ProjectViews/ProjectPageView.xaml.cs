@@ -26,7 +26,7 @@ namespace HannerLabApp.Views.ProjectViews
             }
             catch (Exception ex)
             {
-                // do nothing
+                Console.WriteLine(ex);
             }
             
         }

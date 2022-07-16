@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 using HannerLabApp.Models;
+using HannerLabApp.Services.Media;
 using HannerLabApp.Validators;
 using HannerLabApp.Validators.Rules;
 using HannerLabApp.ViewModels.EdnaViewModels;
@@ -8,12 +10,16 @@ using HannerLabApp.ViewModels.ReadingViewModels;
 using HannerLabApp.ViewModels.SiteViewModels;
 using HannerLabApp.ViewModels.StationViewModels;
 using TinyMvvm;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace HannerLabApp.ViewModels.PhotoViewModels
 {
     public class PhotoViewModel : ViewModelBase, IValidableViewModel<Photo>
     {
         private bool _isAdvancedShown;
+        private string _thumbnail = string.Empty;
+
         public bool IsAdvancedShown
         {
             get => _isAdvancedShown;
@@ -57,7 +63,8 @@ namespace HannerLabApp.ViewModels.PhotoViewModels
                 Edna = this.Edna.Value,
                 Observation = this.Observation.Value,
                 Reading = this.Reading.Value,
-                File64 = this.File64.Value,
+                File = this.File.Value,
+                Thumbnail = this.Thumbnail
             };
             set
             {
@@ -71,14 +78,21 @@ namespace HannerLabApp.ViewModels.PhotoViewModels
                 this.Edna.Value = value.Edna;
                 this.Observation.Value = value.Observation;
                 this.Reading.Value = value.Reading;
-                this.File64.Value = value.File64;
+                this.File.Value = value.File;
+                this.Thumbnail = value.Thumbnail;
             }
         }
 
         public bool IsValid { get; private set; }
 
-        public ValidatableObject<string> File64 { get; set; } =
-            new ValidatableObject<string> { Value = string.Empty };
+        public string Thumbnail
+        { 
+            get => _thumbnail;
+            set => Set(ref _thumbnail, value);
+        }
+
+        public ValidatableObject<FileResult> File { get; set; } =
+            new ValidatableObject<FileResult>();
 
         public ValidatableObject<string> Notes { get; set; } =
             new ValidatableObject<string> { Title = "Notes", Description = "Enter any notes related to this photo." };
@@ -110,6 +124,16 @@ namespace HannerLabApp.ViewModels.PhotoViewModels
             AddDefaults();
         }
 
+        public async Task LoadFileImageThumbnailAsync()
+        {
+            if (this.File.Value != null)
+            {
+                var platformSpecificMediaService = DependencyService.Get<IMediaService>();
+                var thumbnail = await platformSpecificMediaService.GenerateImageThumbnailAsync(this.File.Value);
+                this.Thumbnail = Convert.ToBase64String(thumbnail);
+            }
+        }
+
         public bool Validate()
         {
             bool a = Timestamp.Validate();
@@ -117,7 +141,7 @@ namespace HannerLabApp.ViewModels.PhotoViewModels
             bool c = Site.Validate();
             bool d = Edna.Validate();
             bool e = Observation.Validate();
-            bool f = File64.Validate();
+            bool f = File.Validate();
             bool g = Reading.Validate();
             bool h = RecordedBy.Validate();
             bool i = Notes.Validate();
@@ -141,7 +165,7 @@ namespace HannerLabApp.ViewModels.PhotoViewModels
 
         private void AddValidationRules()
         {
-            File64.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "Must include a photo!" });
+            File.Validations.Add(new IsFileResultContentNotNullOrEmpty { ValidationMessage = "Must include a photo!" });
         }
     }
 }

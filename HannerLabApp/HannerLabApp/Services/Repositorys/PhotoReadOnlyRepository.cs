@@ -30,7 +30,7 @@ namespace HannerLabApp.Services.Repositorys
 
                 var item = await col.FindOneAsync(x => x.Id == id);
 
-                item.File64 = await _photoStore.LoadPhotoAsync(item.Id);
+                item.File = await _photoStore.LoadPhotoAsync(item.Id);
 
                 return item;
             }
@@ -49,8 +49,7 @@ namespace HannerLabApp.Services.Repositorys
                 // Load actual images from filesystem
                 foreach (var i in items)
                 {
-                    i.File64 = await _photoStore.LoadPhotoAsync(i.Id);
-
+                    i.File = await _photoStore.LoadPhotoAsync(i.Id);
                     photos.Add(i);
                 }
 
@@ -70,8 +69,7 @@ namespace HannerLabApp.Services.Repositorys
 
                 foreach (var i in items)
                 {
-                    i.File64 = await _photoStore.LoadPhotoAsync(i.Id);
-
+                    i.File = await _photoStore.LoadPhotoAsync(i.Id);
                     photos.Add(i);
                 }
 

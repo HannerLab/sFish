@@ -10,9 +10,6 @@ using Xamarin.Forms.Xaml;
 
 namespace HannerLabApp.Views
 {
-    /// <summary>
-    /// TODO: Implement this in MVVM
-    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MenuHeaderView : ContentView
     {

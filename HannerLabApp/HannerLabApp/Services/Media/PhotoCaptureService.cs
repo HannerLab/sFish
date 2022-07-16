@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using HannerLabApp.Utils;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -8,32 +7,32 @@ namespace HannerLabApp.Services.Media
 {
     public class PhotoCaptureService : IPhotoCaptureService
     {
-        public async Task<string> PickPhotoAsync()
+        /// <summary>
+        /// Opens the file/ gallery file picker to allow user to load an existing photo
+        /// </summary>
+        /// <returns></returns>
+        public async Task<FileResult> PickPhotoAsync()
         {
             try
             {
                 var photo = await MediaPicker.PickPhotoAsync();
 
-                // canceled by user.
-                if (photo == null)
-                    return string.Empty;
-
-                return await PhotoTools.GetPhotoAsString64Async(photo);
+                return photo;
             }
             catch (FeatureNotSupportedException ex)
             {
                 Console.WriteLine($"PhotoCaptureService: Feature is not supported on the device: {ex.Message}");
-                return string.Empty;
+                return null;
             }
             catch (PermissionException ex)
             {
                 Console.WriteLine($"PhotoCaptureService: Permissions not granted: {ex.Message}");
-                return string.Empty;
+                return null;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"PhotoCaptureService: Unknown error: {ex.Message}");
-                return string.Empty;
+                return null;
             }
         }
 
@@ -42,7 +41,7 @@ namespace HannerLabApp.Services.Media
         /// </summary>
         /// <param name="saveToGallery">Optionally save the captured photo to the default platform specific gallery with the default name</param>
         /// <returns></returns>
-        public async Task<string> CapturePhotoAsync(bool saveToGallery)
+        public async Task<FileResult> CapturePhotoAsync(bool saveToGallery)
         {
             try
             {
@@ -50,38 +49,31 @@ namespace HannerLabApp.Services.Media
 
                 // canceled by user.
                 if (fileResult == null)
-                    return string.Empty;
-                
-                // Convert to base64string
-                var file64 = await PhotoTools.GetPhotoAsString64Async(fileResult);
-                var defaultFileName = fileResult.FileName;
-
-                if (string.IsNullOrEmpty(file64))
-                    return string.Empty;
+                    return null;
 
                 if (saveToGallery)
                 {
                     var platformSpecificMediaService = DependencyService.Get<IMediaService>();
-                    platformSpecificMediaService.SaveImageFromByte(System.Convert.FromBase64String(file64), defaultFileName);
+                    await platformSpecificMediaService.SaveImageFileResultToGalleryAsync(fileResult);
                 }
 
                 // Return file as base64 string
-                return file64;
+                return fileResult;
             }
             catch (FeatureNotSupportedException ex)
             {
                 Console.WriteLine($"PhotoCaptureService: Feature is not supported on the device: {ex.Message}");
-                return string.Empty;
+                return null;
             }
             catch (PermissionException ex)
             {
                 Console.WriteLine($"PhotoCaptureService: Permissions not granted: {ex.Message}");
-                return string.Empty;
+                return null;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"PhotoCaptureService: Unknown error: {ex.Message}");
-                return string.Empty;
+                return null;
             }
         }
     }

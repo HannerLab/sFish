@@ -57,7 +57,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Photo buttons -->
-                <StackLayout Grid.Row="0" Grid.ColumnSpan="2" IsVisible="{Binding ViewModel.File64.Value, Converter={StaticResource InverseStringToBoolConverter}}"
+                <StackLayout Grid.Row="0" Grid.ColumnSpan="2" IsVisible="{Binding ViewModel.Thumbnail, Converter={StaticResource InverseStringToBoolConverter}}"
                              Orientation="Horizontal"
                              HorizontalOptions="Center">
                     <Button Text="Select Existing"
@@ -72,8 +72,8 @@
                 <!-- /Photo buttons-->
 
                 <!-- Photo display -->
-                <StackLayout Grid.Row="1" Grid.ColumnSpan="2" IsVisible="{Binding ViewModel.File64.Value, Converter={StaticResource StringToBoolConverter}}" >
-                    <Image Source="{Binding ViewModel.File64.Value, Converter={StaticResource Base64ToImageConverter}}"
+                <StackLayout Grid.Row="1" Grid.ColumnSpan="2" IsVisible="{Binding ViewModel.Thumbnail, Converter={StaticResource StringToBoolConverter}}" >
+                    <Image Source="{Binding ViewModel.Thumbnail, Converter={StaticResource Base64ToImageConverter}}"
                            HeightRequest="150">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer
@@ -82,14 +82,14 @@
                         </Image.GestureRecognizers>
                     </Image>
 
-                    <Label Text="{Binding ViewModel.File64.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
-                           IsVisible="{Binding ViewModel.File64.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                    <Label Text="{Binding ViewModel.File.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                           IsVisible="{Binding ViewModel.File.IsValid, Converter={StaticResource InverseBoolConverter}}"
                            Style="{StaticResource ValidatableErrorTextStyle}"/>
                 </StackLayout>
                 <!-- /Photo display-->
 
-                <Label Grid.Row="2" Text="{Binding ViewModel.File64.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
-                       IsVisible="{Binding ViewModel.File64.IsValid, Converter={StaticResource InverseBoolConverter}}"
+                <Label Grid.Row="2" Text="{Binding ViewModel.File.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                       IsVisible="{Binding ViewModel.File.IsValid, Converter={StaticResource InverseBoolConverter}}"
                        Style="{StaticResource ValidatableErrorTextStyle}"/>
 
                 <!-- Sample Date -->

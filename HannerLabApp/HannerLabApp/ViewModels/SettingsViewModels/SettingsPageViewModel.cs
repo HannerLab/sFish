@@ -192,13 +192,17 @@ namespace HannerLabApp.ViewModels.SettingsViewModels
             // Get Device ID
             string deviceId = DependencyService.Get<IDeviceIdentifier>().GetIdentifier();
 
+            // sync logs
+            SyncMessage = "Syncing application logs...";
+            await UploadFolder(Constants.LogDirectory, Path.Combine(deviceId, "logs/"));
+
             // sync appdata
             SyncMessage = "Syncing database...";
-            await UploadFolder(Constants.AppDataDirectory, Path.Combine(deviceId, "appdata"));
+            await UploadFolder(Constants.AppDataDirectory, Path.Combine(deviceId, "appdata/"));
 
             // Sync media
             SyncMessage = "Syncing media...";
-            await UploadFolder(Constants.MediaDirectory, Path.Combine(deviceId, "media"));
+            await UploadFolder(Constants.MediaDirectory, Path.Combine(deviceId, "media/"));
 
             // Sync exports
             SyncMessage = "Syncing previous exports...";

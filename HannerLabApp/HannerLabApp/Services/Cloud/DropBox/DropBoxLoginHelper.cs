@@ -39,7 +39,6 @@ namespace HannerLabApp.Services.Cloud.DropBox
             //await Application.Current.MainPage.Navigation.PushModalAsync(contentPage);
             await _pageService.NavigateToAsync(contentPage);
 
-            // wtf TODO
             while (_token == null)
             {
                 await Task.Delay(1);

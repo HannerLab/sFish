@@ -1,16 +1,9 @@
-using System;
-using Dropbox.Api.Users;
-using HannerLabApp.Configuration;
 using HannerLabApp.Models;
-using HannerLabApp.Services.Exporters;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace HannerLabApp.Tests
 {
-    /// <summary>
-    /// TODO: Make tests
-    /// </summary>
     public class Tests
     {
         [SetUp]

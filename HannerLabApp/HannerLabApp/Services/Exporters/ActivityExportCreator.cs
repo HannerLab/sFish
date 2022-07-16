@@ -34,8 +34,6 @@ namespace HannerLabApp.Services.Exporters
 
         public ActivityExportCreator()
         {
-            // TODO: constructor inject these
-
             _projectRepo = App.AppContainer.Resolve<IReadOnlyRepository<Project>>();
             _siteRepo = App.AppContainer.Resolve<IReadOnlyRepository<Site>>();
             _stationRepo = App.AppContainer.Resolve<IReadOnlyRepository<Station>>();
@@ -43,7 +41,6 @@ namespace HannerLabApp.Services.Exporters
             _ednaRepo = App.AppContainer.Resolve<IReadOnlyRepository<Edna>>();
             _observationRepo = App.AppContainer.Resolve<IReadOnlyRepository<Observation>>();
             _equipmentRepo = App.AppContainer.Resolve<IReadOnlyRepository<Equipment>>();
-
 
             // Do not actually load photos in memory 
             _photoRepo = new ReadOnlyRepository<Photo>(App.AppContainer.Resolve<IDbContext>());
@@ -180,10 +177,8 @@ namespace HannerLabApp.Services.Exporters
         /// <returns></returns>
         public async Task SaveExportAsync(Export export)
         {
-            {
-                var exportManager = App.AppContainer.Resolve<IManager<Export>>();
-                await exportManager.AddItemAsync(export);
-            }
+            var exportManager = App.AppContainer.Resolve<IManager<Export>>();
+            await exportManager.AddItemAsync(export);
         }
 
 
@@ -223,8 +218,8 @@ namespace HannerLabApp.Services.Exporters
 
                 row.AttachmentComments = photo.Notes ?? string.Empty;
                 row.AttachmentEventId = photo.Edna?.UserSpecifiedId ?? string.Empty;
-                row.AttachmentFileName = photo.FileName ?? string.Empty;
-                row.AttachmentId = Path.GetFileNameWithoutExtension(photo.FileName) ?? string.Empty;
+                row.AttachmentFileName = photo.GetFileName() ?? string.Empty;
+                row.AttachmentId = Path.GetFileNameWithoutExtension(photo.GetFileName()) ?? string.Empty;
                 row.AttachmentObservationId = photo.Observation?.UserSpecifiedId ?? string.Empty;
                 row.AttachmentProjectId = export.Project?.UserSpecifiedId ?? string.Empty;
                 row.AttachmentReadingId = photo.Reading?.UserSpecifiedId ?? string.Empty;
@@ -571,14 +566,13 @@ namespace HannerLabApp.Services.Exporters
                     foreach (var photo in export.Photos)
                     {
                         // Photo must be loaded again, as the photo object in the export doesn't include the actually photo data.
-                        var photo64 = await photoStore.LoadPhotoAsync(photo.Id);
+                        var photoFileResult = await photoStore.LoadPhotoAsync(photo.Id);
 
-                        if (!string.IsNullOrEmpty(photo64))
+                        if (photo != null)
                         {
-                            var fullSavePath = Path.Combine(mediaSaveDir, photo.FileName);
-                            var bytes = Convert.FromBase64String(photo64);
+                            var fullSavePath = Path.Combine(mediaSaveDir, photoFileResult.FileName);
 
-                            using (var stream = new MemoryStream(bytes))
+                            using (var stream = await photoFileResult.OpenReadAsync())
                             {
                                 using (var newStream = File.OpenWrite(fullSavePath))
                                 {

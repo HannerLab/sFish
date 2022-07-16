@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace HannerLabApp.Services.Media
 {
     public interface IPhotoCaptureService
     {
-        Task<string> CapturePhotoAsync(bool saveToGallery);
-        Task<string> PickPhotoAsync();
+        Task<FileResult> CapturePhotoAsync(bool saveToGallery);
+        Task<FileResult> PickPhotoAsync();
     }
 }

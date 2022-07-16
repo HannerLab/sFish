@@ -7,7 +7,6 @@ namespace HannerLabApp.Services.Media
     /// </summary>
     public interface IFileShare
     {
-        Task ShareFile64Async(string file64);
         Task ShareFileAsync(string filePath);
     }
 }

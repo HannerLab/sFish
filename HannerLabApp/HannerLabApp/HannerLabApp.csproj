@@ -41,24 +41,27 @@
 
 
   <ItemGroup>
-	  <PackageReference Include="Dropbox.Api" Version="6.26.0" />
+	  <PackageReference Include="Dropbox.Api" Version="6.30.0" />
 	  <PackageReference Include="LiteDB" Version="5.0.11" />
 	  <PackageReference Include="LiteDB.Async" Version="0.1.0" />
 	  <PackageReference Include="Microcharts.Forms" Version="0.9.5.9" />
 	  <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-	  <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.3" />
+	  <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.5" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-	  <PackageReference Include="NPOI" Version="2.5.5" />
-	  <PackageReference Include="Serilog" Version="2.10.0" />
+	  <PackageReference Include="NPOI" Version="2.5.6" />
+	  <PackageReference Include="Serilog" Version="2.11.0" />
+	  <PackageReference Include="Serilog.Exceptions" Version="8.2.0" />
+	  <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+	  <PackageReference Include="SkiaSharp" Version="2.88.0" />
 	  <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
 	  <PackageReference Include="System.Security.Cryptography.Xml" Version="6.0.0" />
-	  <PackageReference Include="TinyMvvm" Version="3.0.1" />
-    <PackageReference Include="TinyMvvm.Autofac" Version="3.0.1" />
-    <PackageReference Include="TinyMvvm.Forms" Version="3.0.1" />
-    <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.1" />
-    <PackageReference Include="Xamarin.CommunityToolkit.Markup" Version="2.0.1" />
+	  <PackageReference Include="TinyMvvm" Version="3.1.0" />
+    <PackageReference Include="TinyMvvm.Autofac" Version="3.1.0" />
+    <PackageReference Include="TinyMvvm.Forms" Version="3.1.0" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.2" />
+    <PackageReference Include="Xamarin.CommunityToolkit.Markup" Version="2.0.2" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.2" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />  
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />  
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
   </ItemGroup>

@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using HannerLabApp.Configuration;
 using HannerLabApp.Extensions;
+using Xamarin.Essentials;
 
 namespace HannerLabApp.Services.Media
 {
@@ -10,43 +11,47 @@ namespace HannerLabApp.Services.Media
     {
         private static string GetPhotoFullPath(Guid id)
         {
-            var fileName = $"{id}.jpg";
+            // Save file to disk without file extension, all in 1 folder.
+            var fileName = $"{id}";
             var fullSavePath = Path.Combine(Constants.MediaDirectory, fileName);
 
             return fullSavePath;
         }
 
-        public async Task<bool> SavePhotoAsync(Guid id, string file64)
+        public async Task<bool> SavePhotoAsync(Guid id, FileResult file)
         {
+            if (file == null) return false;
+
             var fullSavePath = GetPhotoFullPath(id);
 
-            if (string.IsNullOrEmpty(file64)) return false;
             if (File.Exists(fullSavePath)) return false;
-
-            var bytes = Convert.FromBase64String(file64);
-
-            using (var stream = new MemoryStream(bytes))
+            try
             {
-                using (var newStream = File.OpenWrite(fullSavePath))
+                using (var stream = await file.OpenReadAsync())
                 {
-                    await stream.CopyToAsync(newStream);
-
-                    return true;
+                    using (var fileStream = new FileStream(fullSavePath, FileMode.Create, FileAccess.Write))
+                    {
+                        await stream.CopyToAsync(fileStream);
+                        return true;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Could not save photo", ex);
+                return false;
             }
         }
 
-        public async Task<string> LoadPhotoAsync(Guid id)
+        public async Task<FileResult> LoadPhotoAsync(Guid id)
         {
+            await Task.Delay(1);
+
             var fullSavePath = GetPhotoFullPath(id);
 
-            using (FileStream stream = File.Open(fullSavePath, FileMode.Open))
-            {
-                byte[] result = new byte[stream.Length];
-                await stream.ReadAsync(result, 0, (int)stream.Length);
+            var fileResult = new FileResult(fullSavePath);
 
-                return Convert.ToBase64String(result);
-            }
+            return fileResult;
         }
 
         public async Task<bool> DeletePhotoAsync(Guid id)

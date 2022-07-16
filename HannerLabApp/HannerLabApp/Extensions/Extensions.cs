@@ -4,13 +4,55 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace HannerLabApp.Extensions
 {
     public static class Extensions
     {
+        public static async Task<string> ToBase64StringAsync(this FileResult fr)
+        {
+            using (var stream = await fr.OpenReadAsync())
+            {
+                return stream.ConvertToBase64String();
+            }
+        }
+
+        public static async Task<byte[]> ToBytesAsync(this FileResult fr)
+        {
+            await Task.Delay(1);
+
+            using (var stream = await fr.OpenReadAsync())
+            {
+                return stream.ConvertToBytes();
+            }
+        }
+
+        public static string ConvertToBase64String(this Stream stream)
+        {
+            byte[] bytes;
+            using (var memoryStream = new MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                bytes = memoryStream.ToArray();
+            }
+
+            return Convert.ToBase64String(bytes);
+        }
+
+        public static byte[] ConvertToBytes(this Stream stream)
+        {
+            byte[] bytes;
+            using (var memoryStream = new MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                bytes = memoryStream.ToArray();
+            }
+
+            return bytes;
+        }
+
         /// <summary>
         /// File.Delete() Wrapper around threading, not real asynchronous file i/o.
         /// </summary>

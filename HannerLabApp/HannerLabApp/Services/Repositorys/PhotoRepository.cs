@@ -35,8 +35,13 @@ namespace HannerLabApp.Services.Repositorys
         {
             using (var db = new LiteDatabaseAsync(_conString))
             {
-                var ret = await _photoStore.SavePhotoAsync(item.Id, item.File64);
-                if (!ret) return;
+                var ret = await _photoStore.SavePhotoAsync(item.Id, item.File);
+
+                if (!ret)
+                {
+                    Console.WriteLine("Failed to saved photo");
+                    return;
+                }
 
                 var col = db.GetCollection<Photo>();
 
@@ -67,7 +72,7 @@ namespace HannerLabApp.Services.Repositorys
 
                 var item = await col.FindOneAsync(x => x.Id == id);
 
-                item.File64 = await _photoStore.LoadPhotoAsync(item.Id);
+                item.File = await _photoStore.LoadPhotoAsync(item.Id);
 
                 return item;
             }
@@ -86,7 +91,7 @@ namespace HannerLabApp.Services.Repositorys
                 // Load actual images from filesystem
                 foreach (var i in items)
                 {
-                    i.File64 = await _photoStore.LoadPhotoAsync(i.Id);
+                    i.File = await _photoStore.LoadPhotoAsync(i.Id);
 
                     photos.Add(i);
                 }
@@ -107,7 +112,7 @@ namespace HannerLabApp.Services.Repositorys
 
                 foreach (var i in items)
                 {
-                    i.File64 = await _photoStore.LoadPhotoAsync(i.Id);
+                    i.File = await _photoStore.LoadPhotoAsync(i.Id);
 
                     photos.Add(i);
                 }
