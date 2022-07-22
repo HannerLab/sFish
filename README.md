@@ -7,10 +7,12 @@
 sFish (The **S**ample and **F**ield data collection **I**nformation **S**ystem for the **H**anner Lab) is a mobile application for iPadOS and android developed to facilitate data collection of environmental DNA (eDNA) within the field. sFish aims to be compatible with industry and research standards for eDNA sample collection including those used by the Department of Fisheries and Oceans Canada (DFO). 
 
 ## Installation and Usage
-For iPadOS, sFish is currently available through the Apple testflight program. For Android based devices, an installable APK file can downloaded from this repo. Alternatively the app may be compiled and installed manually from this repository.
+For iPadOS, sFish is currently available through the Apple testflight program [here](https://testflight.apple.com/join/NEBSwZWr). For Android based devices, an installable APK file can downloaded from the repository releases.
+
+Alternatively the app may be compiled and installed manually from this repository.
 
 ## Support
-For any support, open issues directly through this Github repository or contact the primary author directly.
+For any support, open issues directly through this Github repository.
 
 ## Contributing
 All contributions are welcome. Please fork and open a pull request.
