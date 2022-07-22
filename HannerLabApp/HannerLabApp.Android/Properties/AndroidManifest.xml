@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="de.llalon.hannerlabapp" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="102" android:versionName="1.0.2" package="de.llalon.hannerlabapp" android:installLocation="auto">
 	<uses-sdk android:requestLegacyExternalStorage="true" android:minSdkVersion="27" android:targetSdkVersion="27" />
 	<application android:label="HannerLabApp.Android" android:theme="@style/MainTheme"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
